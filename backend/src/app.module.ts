@@ -1,10 +1,33 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
+import { UsersModule } from './users/users.module';
+import { AttractionsModule } from './attractions/attractions.module';
+import { PlacesModule } from './places/places.module';
+import { SavedAttractionsModule } from './saved-attractions/saved-attractions.module';
+import { VisitedAttractionsModule } from './visited-attractions/visited-attractions.module';
+import { Attraction } from './attractions/attraction.entity';
+import { Place } from './places/place.entity';
+import { User } from './users/user.entity';
+import { SavedAttraction } from './saved-attractions/saved-attractions.entity';
+import { VisitedAttraction } from './visited-attractions/visited-attractions.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    UsersModule, 
+    AttractionsModule, 
+    PlacesModule, 
+    SavedAttractionsModule, 
+    VisitedAttractionsModule, 
+    TypeOrmModule.forRoot({
+    type: 'postgres',
+    host: 'localhost',
+    port: 5433,
+    username: 'postgres',
+    password: 'postgres',
+    database: 'citycompass',
+    entities: [User, Place, Attraction, SavedAttraction, VisitedAttraction],
+    synchronize: true,
+  })],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
