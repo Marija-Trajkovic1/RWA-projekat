@@ -10,6 +10,7 @@ import { User } from './users/user.entity';
 import { SavedAttraction } from './saved-attractions/saved-attractions.entity';
 import { VisitedAttraction } from './visited-attractions/visited-attractions.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     UsersModule, 
@@ -26,7 +27,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     database: 'citycompass',
     entities: [User, Place, Attraction, SavedAttraction, VisitedAttraction],
     synchronize: true,
-  })],
+  }), AuthModule],
   controllers: [],
   providers: [],
 })
