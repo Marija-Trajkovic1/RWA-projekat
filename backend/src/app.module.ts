@@ -11,6 +11,7 @@ import { SavedAttraction } from './saved-attractions/saved-attractions.entity';
 import { VisitedAttraction } from './visited-attractions/visited-attractions.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     UsersModule, 
@@ -19,15 +20,21 @@ import { AuthModule } from './auth/auth.module';
     SavedAttractionsModule, 
     VisitedAttractionsModule, 
     TypeOrmModule.forRoot({
-    type: 'postgres',
-    host: 'localhost',
-    port: 5433,
-    username: 'postgres',
-    password: 'postgres',
-    database: 'citycompass',
-    entities: [User, Place, Attraction, SavedAttraction, VisitedAttraction],
-    synchronize: true,
-  }), AuthModule],
+      type: 'postgres',
+      host: 'localhost',
+      port: 5433,
+      username: 'postgres',
+      password: 'postgres',
+      database: 'citycompass',
+      entities: [User, Place, Attraction, SavedAttraction, VisitedAttraction],
+      synchronize: true,
+    }), 
+    AuthModule,
+    ConfigModule.forRoot({
+      isGlobal:true,
+      envFilePath: '.env', 
+    })
+  ],
   controllers: [],
   providers: [],
 })

@@ -1,14 +1,8 @@
-import { Body, ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterUserDto } from 'src/users/dto/register-user.dto';
 import { UsersService } from 'src/users/users.service';
-import { LoginRequestDto } from './dto/login-request.dto';
 import * as bcrypt from 'bcrypt';
-import passport from 'passport';
-import { User } from 'src/users/user.entity';
-import { LoginResponseDto } from './dto/login-response.dto';
-
-
 @Injectable()
 export class AuthService {
     constructor(
@@ -36,6 +30,22 @@ export class AuthService {
         }
     }
 
-    
+    async login(email:string, password:string): Promise<{access_token: string}>{
+        const user = await this.usersService.findUserByEmail(email);
+        if(!user){
+            throw new UnauthorizedException('Invaid credentials!');
+        }
+        
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if(!passwordMatch){
+            throw new UnauthorizedException('Invaid password!');
+        }
+
+        const payload = {email: user.email, sub: user.id};
+        return{
+            access_token: await this.jwtService.signAsync(payload),
+        };
+       
+    }
 
 }
