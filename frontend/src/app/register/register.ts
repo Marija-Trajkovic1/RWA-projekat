@@ -3,8 +3,9 @@ import { MatCard, MatCardHeader, MatCardContent, MatCardTitle } from "@angular/m
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatInput } from "@angular/material/input";
 import { MatAnchor } from "@angular/material/button";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Auth } from '../services/auth';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +27,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class Register {
   registerForm: FormGroup;
 
-  constructor(private fb:FormBuilder){
+  constructor(private fb:FormBuilder, private authService:Auth, private router: Router){
     this.registerForm=this.fb.group({
       fullName:['', Validators.required],
       email:['', [Validators.required, Validators.email]],
@@ -37,7 +38,15 @@ export class Register {
 
   onSubmit(){
     if(this.registerForm.valid){
-      console.log('Regoster data:', this.registerForm.value);
+      this.authService.register(this.registerForm.value).subscribe({
+        next:(response)=>{
+          console.log('User registered: ', response);
+          this.router.navigate(['/login']);
+        }, 
+        error:(err)=>{
+          console.log('Registration failed:', err);
+        }
+      })
     }
   }
 }

@@ -7,11 +7,10 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class Auth {
-  
   constructor(private http:HttpClient){} 
   
-  register(data:any):Observable<any>{
-    return this.http.post(`${environment.apiUrl}/auth/register`, data)
+  register(userData:any):Observable<any>{
+    return this.http.post(`${environment.apiUrl}/auth/register`, userData)
   }
 
   login(data:any): Observable<any>{
