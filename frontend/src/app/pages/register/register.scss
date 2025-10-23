@@ -1,11 +1,11 @@
-.login-container{
-    display:flex;
+.register-container{
+    display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-.login-card{
+.register-card{
     width: 400px;
     padding: 20px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15);
@@ -14,5 +14,10 @@
 
 .full-width{
     width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 16px; 
+}
+
+.button-group {
+  display: flex;
+  justify-content:space-around;
 }
