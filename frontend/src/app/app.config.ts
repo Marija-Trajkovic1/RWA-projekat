@@ -12,7 +12,7 @@ import { AuthEffects } from '../store/auth-store/auth.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideBrowserGlobalErrorListeners(),
+    
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
@@ -20,7 +20,7 @@ export const appConfig: ApplicationConfig = {
       auth: authReducer,
     }),
     provideEffects([AuthEffects]),
-
     provideStoreDevtools(),
+    provideBrowserGlobalErrorListeners(),
   ]
 };

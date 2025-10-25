@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { login } from '../../../store/auth-store/auth.actions';
 import { LoginDto } from '../../dtos/login.dto';
 import { selectAuthError, selectAuthLoading } from '../../../store/auth-store/auth.selectors';
+import { AuthState } from '../../../store/store.interfaces';
 
 @Component({
   selector: 'app-login',
@@ -29,21 +30,21 @@ import { selectAuthError, selectAuthLoading } from '../../../store/auth-store/au
   styleUrl: './login.scss'
 })
 export class Login {
-  private store = inject(Store);
+   private store = inject<Store<{ auth: AuthState }>>(Store);
   loginForm: FormGroup;
   duration: number=10000;
-  loading$ = this.store.select(selectAuthLoading);
+  
+   loading$ = this.store.select(selectAuthLoading);
   error$ = this.store.select(selectAuthError);
 
   constructor(
-    private fb:FormBuilder, 
+    private fb:FormBuilder
   ) {
     this.loginForm=this.fb.group({
       email:['',[Validators.required, Validators.email]],
       password:['', Validators.required],
     });
   }
-
   onLogin(){
       if(this.loginForm.valid){
         const loginData :LoginDto = this.loginForm.value;
