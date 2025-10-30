@@ -1,13 +1,19 @@
 import { inject, Injectable } from "@angular/core";
 import {createEffect, Actions, ofType} from '@ngrx/effects'
-import { login, loginFailure, loginSuccess } from "./auth.actions";
-import { catchError, map, mergeMap, of } from "rxjs";
+import { login, loginFailure, loginSuccess, logout } from "./auth.actions";
+import { catchError, map, mergeMap, of, tap } from "rxjs";
 import { AuthService } from "../../app/services/auth/auth.service";
+import { Router } from "@angular/router";
+import { Notification } from "../../components/notification/notification";
  
 @Injectable()
 export class AuthEffects {
+    private authService = inject(AuthService);
     private actions$ = inject(Actions);
-    constructor(private authService: AuthService) {
+    private router = inject(Router);
+    private snackBar=inject(Notification);
+
+    constructor() {
         console.log('AuthEffects init:', { actions: this.actions$, authService: this.authService });
     }
     
@@ -20,6 +26,27 @@ export class AuthEffects {
                 catchError(error=>of(loginFailure({error:error.message})))
             ))
         )
+    )
 
+    loginSuccessRedirect$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(loginSuccess),
+            tap(()=>{
+                this.snackBar.showSnackBar("Successefully logged in!", 4000, "success");
+                this.router.navigate(['wheretogo'])
+            })
+        ),
+        { dispatch: false}
+    )
+
+    logout$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(logout),
+            tap(()=>{
+                this.snackBar.showSnackBar('Successfully logged out!' , 4000, 'info');
+                this.router.navigate(['/home']);
+            })
+        ),
+        {dispatch: false}
     )
 }

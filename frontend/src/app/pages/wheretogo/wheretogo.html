@@ -1,5 +1,5 @@
-<div class="where-to-go-container">
-    <mat-card class="where-to-go-card">
+<div class="shared-container">
+    <mat-card class="shared-card">
         <mat-card-header class="title">
             <mat-card-title>
                 Where do you want to go?
@@ -9,12 +9,25 @@
         <mat-card-content>
             <p>Choose city that you want to explore or use your curent location.</p>
 
-            <mat-form-field>
+            <mat-form-field appearance="outline">
                     <mat-label>City</mat-label>
-                    
-                </mat-form-field>
+                    <mat-select formControlName="city">
+                        @for (place of places$ | async; track place.id){
+                            <mat-option [value]="place.id">{{place.placeName}}</mat-option>
+                        }
+                    </mat-select>
+            </mat-form-field>
 
+            <div class ="location-option">
+                 <button mat-stroked-button color="primary" (click)="useCurrentLocation()">
+                    <mat-icon>my-location</mat-icon>
+                    Use my current location
+                </button>
+
+            </div>
+            @if (loading$ | async){
+                <p>Loading cities...</p>
+            }
         </mat-card-content>
     </mat-card>
-
 </div>

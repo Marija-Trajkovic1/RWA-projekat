@@ -1,3 +1,4 @@
+import { Place } from "../models/place.model";
 import { User } from "../models/user.model";
 
 export interface AuthState {
@@ -12,4 +13,16 @@ export const initialStateAuth: AuthState = {
     token: null,
     loading: false,
     error: null
-};
+}
+
+export interface PlacesState {
+    places: Place[];
+    loading: boolean;
+    error: string | null;
+}
+
+export const initialStatePlaces : PlacesState = {
+    places: [],
+    loading: false,
+    error: null,
+}

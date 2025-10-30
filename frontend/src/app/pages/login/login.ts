@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from "@angular/material/card";
 import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatAnchor } from "@angular/material/button";
+import { MatButton } from "@angular/material/button";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
@@ -21,20 +21,20 @@ import { AuthState } from '../../../store/store.interfaces';
     MatFormField,
     MatInput,
     MatLabel,
-    MatAnchor,
+    MatButton,
     ReactiveFormsModule,
     RouterLink,
     MatError,
 ],
   templateUrl: './login.html',
-  styleUrl: './login.scss'
+  styleUrls: ['./login.scss', '../../styles/shared-style.scss']
 })
 export class Login {
-   private store = inject<Store<{ auth: AuthState }>>(Store);
+  private store = inject<Store<{ auth: AuthState }>>(Store);
   loginForm: FormGroup;
   duration: number=10000;
   
-   loading$ = this.store.select(selectAuthLoading);
+  loading$ = this.store.select(selectAuthLoading);
   error$ = this.store.select(selectAuthError);
 
   constructor(
@@ -49,6 +49,8 @@ export class Login {
       if(this.loginForm.valid){
         const loginData :LoginDto = this.loginForm.value;
         this.store.dispatch(login({loginData}));
+        
+        console.log("Logovano!")
       }
     }
 }

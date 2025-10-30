@@ -9,6 +9,8 @@ import { authReducer } from '../store/auth-store/auth.reducer';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { AuthEffects } from '../store/auth-store/auth.effects';
+import { placesReducer } from '../store/places-store/places.reducer';
+import { PlacesEffects } from '../store/places-store/places.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,8 +20,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideStore({
       auth: authReducer,
+      places: placesReducer,
     }),
-    provideEffects([AuthEffects]),
+    provideEffects([AuthEffects, PlacesEffects]),
     provideStoreDevtools(),
     provideBrowserGlobalErrorListeners(),
   ]

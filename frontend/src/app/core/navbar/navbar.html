@@ -1,6 +1,12 @@
 <mat-toolbar color="primary" class="navbar">
     <span class="title">City Compass</span>
     <span class="spacer"></span>
-    <button mat-button class="nav-button" [routerLink]="['/login']">Login</button>
-    <button mat-button class="nav-button" routerLink="/register">Register</button>
+
+    @if ((token$ | async) !== null ){
+        <button mat-button class="nav-button" (click)="onLogout()">Logout</button>
+    } @else {
+        <button mat-button class="nav-button" routerLink="/login">Login</button>
+        <button mat-button class="nav-button" routerLink="/register">Register</button>
+    }
+    
 </mat-toolbar>

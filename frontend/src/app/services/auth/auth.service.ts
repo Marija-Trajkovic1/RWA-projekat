@@ -11,11 +11,13 @@ import { RegisterDto } from '../../dtos/register.dto';
 export class AuthService {
   constructor(private http:HttpClient){} 
   
-  register(registerData:RegisterDto):Observable<any>{
+  register(registerData:RegisterDto): Observable<any> {
     return this.http.post(`${environment.apiUrl}/auth/register`, registerData)
   }
 
-  login(loginData:LoginDto): Observable<{access_token: string}>{
+  login(loginData:LoginDto): Observable<{access_token: string}> {
     return this.http.post<{access_token:string}>(`${environment.apiUrl}/auth/login`, loginData);
   }
+
+
 }

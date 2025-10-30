@@ -24,7 +24,7 @@ import { RegisterDto } from '../../dtos/register.dto';
     ReactiveFormsModule,
 ],
   templateUrl: './register.html',
-  styleUrl: './register.scss'
+  styleUrls: ['./register.scss','../../styles/shared-style.scss']
 })
 export class Register {
   registerForm: FormGroup;

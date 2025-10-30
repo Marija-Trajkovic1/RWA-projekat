@@ -25,8 +25,8 @@ export const authReducer=createReducer(
     })),
 
    on(logout, (state)=>({
-    ...state,
-    user:null,
-    token: null
+        ...state,
+        user:null,
+        token: null
    })) 
 )
