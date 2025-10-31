@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatCard, MatCardHeader, MatCardContent, MatCardTitle } from "@angular/material/card";
 import { MatFormField, MatHint, MatLabel } from "@angular/material/form-field";
 import { MatInput } from "@angular/material/input";
@@ -27,11 +27,13 @@ import { RegisterDto } from '../../dtos/register.dto';
   styleUrls: ['./register.scss','../../styles/shared-style.scss']
 })
 export class Register {
+  private formBuilder = inject(FormBuilder);
+  private snackBar= inject(Notification);
   registerForm: FormGroup;
   duration :number =10000;
 
-  constructor(private fb:FormBuilder, private authService:AuthService,private notificationService: Notification, private router: Router){
-    this.registerForm=this.fb.group({
+  constructor(private authService:AuthService, private router: Router){
+    this.registerForm=this.formBuilder.group({
       fullName:['', Validators.required],
       email:['', [Validators.required, Validators.email]],
       username:['', Validators.required],
@@ -45,7 +47,7 @@ export class Register {
       this.authService.register(registerData).subscribe({
         next:(response)=>{
           console.log('User registered: ', response);
-          this.notificationService.showSnackBar('Successfully registered! Redirecting...', this.duration,'success');
+          this.snackBar.showSnackBar('Successfully registered! Redirecting...', this.duration,'success');
           setTimeout(() => {
             this.router.navigate(['/login']);
           }, this.duration);
@@ -54,11 +56,11 @@ export class Register {
         error:(err)=>{
           console.log('Registration failed:', err);
           
-          this.notificationService.showSnackBar('Registration failed! Check your data!',this.duration, 'error');
+          this.snackBar.showSnackBar('Registration failed! Check your data!',this.duration, 'error');
         }
       })
     }else{
-      this.notificationService.showSnackBar('Enter valid data to register!', this.duration, 'info');
+      this.snackBar.showSnackBar('Enter valid data to register!', this.duration, 'info');
     }
   }
 }

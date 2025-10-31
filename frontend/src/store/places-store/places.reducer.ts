@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialStatePlaces } from "../store.interfaces";
-import { loadPlaces, loadPlacesFailure, loadPlacesSuccess } from "./places.actions";
+import { loadPlaces, loadPlacesFailure, loadPlacesSuccess, selectPlace } from "./places.actions";
 
 export const placesReducer = createReducer(
     initialStatePlaces,
@@ -24,5 +24,10 @@ export const placesReducer = createReducer(
         loading: false,
         error,
     })),
+
+    on(selectPlace, (state, {place}) =>({
+        ...state, 
+        selectedPlace: place
+    }))
     
 )

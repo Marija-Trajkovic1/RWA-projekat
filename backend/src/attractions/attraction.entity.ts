@@ -2,6 +2,7 @@ import { Column, Entity, OneToMany, ManyToOne, PrimaryGeneratedColumn } from "ty
 import { Place } from "src/places/place.entity";
 import { VisitedAttraction } from "src/visited-attractions/visited-attractions.entity";
 import { SavedAttraction } from "src/saved-attractions/saved-attractions.entity";
+import { truncate } from "fs";
 
 @Entity()
 export class Attraction{
@@ -14,16 +15,19 @@ export class Attraction{
     @Column({nullable:true})
     shortDescription:string;
 
+    @Column({nullable:true})
+    longDescription: string;
+
     @Column()
     imageURL:string;
 
     @Column()
     category:string;
 
-    @Column({type:'float', nullable: true})
+    @Column({ type: 'double precision', nullable: true })
     latitude: number;
 
-    @Column({type:'float', nullable:true})
+    @Column({ type: 'double precision', nullable: true })
     longitude: number;
 
     @ManyToOne(()=> Place, (place)=>place.attractions, {onDelete: 'CASCADE'})

@@ -31,16 +31,15 @@ import { AuthState } from '../../../store/store.interfaces';
 })
 export class Login {
   private store = inject<Store<{ auth: AuthState }>>(Store);
+  private formBuilder = inject(FormBuilder);
   loginForm: FormGroup;
   duration: number=10000;
   
   loading$ = this.store.select(selectAuthLoading);
   error$ = this.store.select(selectAuthError);
 
-  constructor(
-    private fb:FormBuilder
-  ) {
-    this.loginForm=this.fb.group({
+  constructor() {
+    this.loginForm=this.formBuilder.group({
       email:['',[Validators.required, Validators.email]],
       password:['', Validators.required],
     });

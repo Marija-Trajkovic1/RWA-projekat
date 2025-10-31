@@ -8,16 +8,16 @@
 
         <mat-card-content>
             <p>Choose city that you want to explore or use your curent location.</p>
-
-            <mat-form-field appearance="outline">
-                    <mat-label>City</mat-label>
-                    <mat-select formControlName="city">
-                        @for (place of places$ | async; track place.id){
-                            <mat-option [value]="place.id">{{place.placeName}}</mat-option>
-                        }
-                    </mat-select>
-            </mat-form-field>
-
+            <form [formGroup]="cityForm">
+                <mat-form-field appearance="outline">
+                        <mat-label>City</mat-label>
+                        <mat-select formControlName="city">
+                            @for (place of places$ | async; track place.id){
+                                <mat-option [value]="place.id">{{place.placeName}}</mat-option>
+                            }
+                        </mat-select>
+                </mat-form-field>
+            </form>
             <div class ="location-option">
                  <button mat-stroked-button color="primary" (click)="useCurrentLocation()">
                     <mat-icon>my-location</mat-icon>

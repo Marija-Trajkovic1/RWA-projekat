@@ -17,3 +17,8 @@ export const selectPlacesError = createSelector(
     selectPlacesState,
     (state: PlacesState)=> state.error
 )
+
+export const selectSelectedPlace = createSelector(
+    selectPlacesState,
+    (state:PlacesState) => state.selectedPlace
+)

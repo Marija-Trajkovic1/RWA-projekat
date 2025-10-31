@@ -9,6 +9,12 @@ export class Place{
     @Column()
     placeName:string;
 
+    @Column({ type: 'double precision', nullable: true })
+    latitude: number;
+
+    @Column({ type: 'double precision', nullable: true })
+    longitude: number;
+
     @OneToMany(()=>Attraction, (attraction)=>attraction.place)
     attractions: Attraction[];
 }

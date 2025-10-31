@@ -17,12 +17,14 @@ export const initialStateAuth: AuthState = {
 
 export interface PlacesState {
     places: Place[];
+    selectedPlace: Place | null;
     loading: boolean;
     error: string | null;
 }
 
 export const initialStatePlaces : PlacesState = {
     places: [],
+    selectedPlace: null,
     loading: false,
     error: null,
 }
