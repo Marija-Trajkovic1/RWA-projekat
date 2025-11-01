@@ -12,6 +12,7 @@ export const authReducer=createReducer(
     })),
 
     on(loginSuccess, (state, { token }) => ({
+        
         ...state,
         token,
         loading: false, 

@@ -4,14 +4,14 @@ import { login, loginFailure, loginSuccess, logout } from "./auth.actions";
 import { catchError, map, mergeMap, of, tap } from "rxjs";
 import { AuthService } from "../../app/services/auth/auth.service";
 import { Router } from "@angular/router";
-import { Notification } from "../../components/notification/notification";
+import { SnackBar } from "../../components/notification/snack-bar";
  
 @Injectable()
 export class AuthEffects {
     private authService = inject(AuthService);
     private actions$ = inject(Actions);
     private router = inject(Router);
-    private snackBar=inject(Notification);
+    private snackBar=inject(SnackBar);
 
     constructor() {
         console.log('AuthEffects init:', { actions: this.actions$, authService: this.authService });

@@ -21,4 +21,9 @@ export class PlacesService {
 
         return availablePlaces;
     }
+
+    async getPlaceByName(placeName: string){
+        const place = await this.placeRepository.findOneBy({placeName});
+        return place;
+    }
 }

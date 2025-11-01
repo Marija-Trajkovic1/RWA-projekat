@@ -5,7 +5,14 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatButton],
+  imports: [
+    RouterLink, 
+    MatCard, 
+    MatCardHeader, 
+    MatCardTitle, 
+    MatCardContent, 
+    MatButton
+  ],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })

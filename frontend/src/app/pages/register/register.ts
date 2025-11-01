@@ -6,7 +6,7 @@ import { MatAnchor } from "@angular/material/button";
 import { Router, RouterLink } from "@angular/router";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
-import { Notification } from '../../../components/notification/notification';
+import { SnackBar } from '../../../components/notification/snack-bar';
 import { RegisterDto } from '../../dtos/register.dto';
 @Component({
   selector: 'app-register',
@@ -28,7 +28,7 @@ import { RegisterDto } from '../../dtos/register.dto';
 })
 export class Register {
   private formBuilder = inject(FormBuilder);
-  private snackBar= inject(Notification);
+  private snackBar= inject(SnackBar);
   registerForm: FormGroup;
   duration :number =10000;
 

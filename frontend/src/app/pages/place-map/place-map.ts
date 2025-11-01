@@ -12,4 +12,8 @@ export class PlaceMap {
   private store = inject(Store);
 
   selectedPlace$ = this.store.select(selectSelectedPlace);
+
+  constructor() {}
+
+  
 }

@@ -23,7 +23,11 @@ export class Navbar {
   private store = inject(Store);
   token$: Observable<string |null> = this.store.select(selectAuthToken);
 
-  constructor(){}
+  constructor(){
+    this.token$.subscribe(token => {
+    console.log('🔹 Token u Navbar:', token);
+  });
+  }
 
   onLogout(): void{
     this.store.dispatch(logout());

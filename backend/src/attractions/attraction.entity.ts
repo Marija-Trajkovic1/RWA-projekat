@@ -2,8 +2,6 @@ import { Column, Entity, OneToMany, ManyToOne, PrimaryGeneratedColumn } from "ty
 import { Place } from "src/places/place.entity";
 import { VisitedAttraction } from "src/visited-attractions/visited-attractions.entity";
 import { SavedAttraction } from "src/saved-attractions/saved-attractions.entity";
-import { truncate } from "fs";
-
 @Entity()
 export class Attraction{
     @PrimaryGeneratedColumn()
