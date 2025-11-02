@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { PlacesService } from './places.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { PlaceResponseDto } from './dto/place-response.dto';
@@ -16,7 +16,7 @@ export class PlacesController {
 
     @UseGuards(JwtAuthGuard)
     @Get('getPlaceByName')
-    async getPlaceByName(placeName: string): Promise<PlaceResponseDto | null>{
+    async getPlaceByName(@Query('placeName') placeName: string): Promise<PlaceResponseDto | null>{
         return this.placesService.getPlaceByName(placeName);
     }
 }

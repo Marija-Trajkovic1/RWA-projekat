@@ -10,6 +10,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return store.select(selectAuthToken).pipe(
         take(1),
         exhaustMap(token=>{
+
+            if(req.url.includes('opencagedata.com')){
+                return next(req);
+            }
             if(token){
                 const cloned = req.clone({
                     setHeaders: {

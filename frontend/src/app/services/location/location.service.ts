@@ -1,18 +1,31 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { OPEN_STREET_URL } from '../../constants/api-endpoints';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocationService {
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient){}   
 
-  getCityFromCoordinates(latitude: number, longitude: number): Observable<string | null>{
-    return this.http.get<any>(`${OPEN_STREET_URL}/reverse?format=json&lat=${latitude}&lon=${longitude}`).pipe(
-      map((result)=>result.address?.city || result.address?.town || result.address?.village || null)
-    );
+  getPlaceFromCoordinates(latitude: number, longitude: number):Observable<string | null>{
+    const url=`${environment.openCageBaseUrl}?q=${latitude}+${longitude}&key=${environment.opencageApiKey}&language=en&pretty=1`;
+    return this.http.get<any>(url).pipe(
+      map((response)=>{
+        const components = response.results[0].components;
+        if(!components) return null;
+
+        const placeName = components.municipality || components.city || components.town || components.village || null;
+        console.log('Calculated place from opencage: ', placeName);
+        return placeName.replace(/^City of\s+/i, '');
+      }),
+      catchError((error)=>{
+        console.log('Error during reverse geocoding:', error);
+        return of(null);
+      })
+    )
   }
   
 }
