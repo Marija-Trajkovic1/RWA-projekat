@@ -55,6 +55,7 @@ export class WhereToGo implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(loadPlaces());
+    
     this.error$.subscribe(error =>{
       if(error){
         this.snackBar.showSnackBar(error, DURATION, STYLE_ERROR);
@@ -64,19 +65,19 @@ export class WhereToGo implements OnInit {
     this.cityForm.get('city')?.valueChanges
     .pipe(
       withLatestFrom(this.places$),
-      filter(([places]) => !!places.length)
-    ).subscribe(([cityId])=>{
-      if(cityId){
-        this.places$.subscribe(places=>{
+      filter(([cityId, places]) => !!places.length && !!cityId),
+      tap(([cityId, places])=>{
           const place = places.find(p=>p.id===cityId);
           if(place){
             this.store.dispatch(selectPlace({place}));
             console.log('Selected: ', place);
             this.router.navigate(['/placemap']);
+          }else{
+            console.log('Place not found for selected cityId:', cityId);
           }
         })
-      }
-    })
+      )
+      .subscribe();
   }
 
   useCurrentLocation(){
