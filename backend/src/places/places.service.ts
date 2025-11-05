@@ -26,4 +26,8 @@ export class PlacesService {
         const place = await this.placeRepository.findOneBy({placeName});
         return place;
     }
+
+    async getAttractionsForPlace(placeName:string){
+        const attractions = await this.placeRepository.find(placeName);
+    }
 }

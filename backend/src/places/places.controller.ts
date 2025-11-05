@@ -19,4 +19,10 @@ export class PlacesController {
     async getPlaceByName(@Query('placeName') placeName: string): Promise<PlaceResponseDto | null>{
         return this.placesService.getPlaceByName(placeName);
     }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('getAtractionsForPlace')
+    async getAttractionsForPlace(@Query('placeName') placeName:string):Promise<PlaceResponseDto[]  |null>{
+        return this.placesService.getAttractionsForPlace(placeName);
+    }
 }
