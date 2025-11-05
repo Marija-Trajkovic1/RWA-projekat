@@ -26,13 +26,9 @@ export class PlaceMap implements AfterViewInit, OnDestroy{
     this.sub = this.selectedPlace$.subscribe(place=>{
       if(place){
         this.setInitalMap(place.longitude, place.latitude);
-
         this.map.addControl(new maplibregl.NavigationControl(), 'top-right');
-
         this.setCityMarker(place);
-
-       this.loadMapLayers();
-       
+        this.loadMapLayers();
       }
     })
   }

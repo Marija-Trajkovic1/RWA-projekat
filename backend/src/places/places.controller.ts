@@ -2,6 +2,7 @@ import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { PlacesService } from './places.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { PlaceResponseDto } from './dto/place-response.dto';
+import { Attraction } from 'src/attractions/attraction.entity';
 
 @Controller('places')
 export class PlacesController {
@@ -22,7 +23,7 @@ export class PlacesController {
 
     @UseGuards(JwtAuthGuard)
     @Get('getAtractionsForPlace')
-    async getAttractionsForPlace(@Query('placeName') placeName:string):Promise<PlaceResponseDto[]  |null>{
+    async getAttractionsForPlace(@Query('placeName') placeName:string):Promise<Attraction[]>{
         return this.placesService.getAttractionsForPlace(placeName);
     }
 }
