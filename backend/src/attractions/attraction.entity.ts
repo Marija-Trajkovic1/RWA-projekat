@@ -17,16 +17,19 @@ export class Attraction{
     longDescription: string;
 
     @Column()
-    imageURL:string;
-
-    @Column()
     category:string;
 
-    @Column({ type: 'double precision', nullable: true })
+    @Column({ type: 'double precision' })
     latitude: number;
 
-    @Column({ type: 'double precision', nullable: true })
+    @Column({ type: 'double precision'})
     longitude: number;
+
+    @Column({nullable:true})
+    workingHours: string;
+
+    @Column({nullable:true})
+    websiteLink: string;
 
     @ManyToOne(()=> Place, (place)=>place.attractions, {onDelete: 'CASCADE'})
     place: Place;

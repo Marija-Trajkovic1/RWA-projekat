@@ -1,0 +1,1 @@
+export const PLACE_NAME_REGULAR = /^(City of\s+)|(\s*Municipality\s*$)/gi;

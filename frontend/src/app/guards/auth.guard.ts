@@ -3,7 +3,7 @@ import { CanActivateFn, Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { selectAuthToken } from "../../store/auth-store/auth.selectors";
 import { map, take } from "rxjs";
-import { SnackBar } from "../../components/notification/snack-bar";
+import { SnackBar } from "../components/notification/snack-bar";
 
 export const authGuard: CanActivateFn = () => {
     const store = inject(Store);

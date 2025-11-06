@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Place } from './place.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Attraction } from 'src/attractions/attraction.entity';
 
 @Injectable()
 export class PlacesService {
@@ -28,7 +27,7 @@ export class PlacesService {
         return place;
     }
 
-    async getAttractionsForPlace(placeName:string): Promise<Attraction[]>{
+    async getAttractionsForPlace(placeName:string){
         const place = await this.placeRepository.findOne({
             where: {placeName},
             relations: ['attractions']

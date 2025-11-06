@@ -1,5 +1,6 @@
-import { Place } from "../models/place.model";
-import { User } from "../models/user.model";
+import { Attraction } from "../app/models/attraction.model";
+import { Place } from "../app/models/place.model";
+import { User } from "../app/models/user.model";
 
 export interface AuthState {
     user: User | null;
@@ -25,6 +26,18 @@ export interface PlacesState {
 export const initialStatePlaces : PlacesState = {
     places: [],
     selectedPlace: null,
+    loading: false,
+    error: null,
+}
+
+export interface AttractionsState {
+    attractions: Attraction[];
+    loading: boolean;
+    error: string | null;
+}
+
+export const initialStateAttractions : AttractionsState = {
+    attractions: [],
     loading: false,
     error: null,
 }

@@ -4,7 +4,8 @@ import { selectSelectedPlace } from '../../../store/places-store/places.selector
 import * as maplibregl from 'maplibre-gl'
 import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Place } from '../../../models/place.model';
+import { Place } from '../../models/place.model';
+import { loadAttractions } from '../../../store/attraction-store/attractions.actions';
 
 @Component({
   selector: 'app-place-map',
@@ -24,7 +25,9 @@ export class PlaceMap implements AfterViewInit, OnDestroy{
 
   ngAfterViewInit(): void {
     this.sub = this.selectedPlace$.subscribe(place=>{
+      if(!place) return;
       if(place){
+        this.store.dispatch(loadAttractions({placeName: place.placeName}));
         this.setInitalMap(place.longitude, place.latitude);
         this.map.addControl(new maplibregl.NavigationControl(), 'top-right');
         this.setCityMarker(place);

@@ -4,7 +4,7 @@ import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { Store } from '@ngrx/store';
 import { selectAllPlaces, selectPlacesError, selectPlacesLoading } from '../../../store/places-store/places.selectors';
 import { loadPlaces, selectPlace } from '../../../store/places-store/places.actions';
-import { SnackBar } from '../../../components/notification/snack-bar';
+import { SnackBar } from '../../components/notification/snack-bar';
 import { AsyncPipe } from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 import { EMPTY, filter, Observable, switchMap, tap, withLatestFrom } from 'rxjs';
 import { LocationService } from '../../services/location/location.service';
 import { PlacesService } from '../../services/places/places.service';
-import { DURATION, STYLE_ERROR, STYLE_INFO, STYLE_SUCCESS } from '../../constants/snack-bar';
+import { DURATION, STYLE_ERROR, STYLE_INFO, STYLE_SUCCESS } from '../../constants/snack-bar.constants';
 @Component({
   selector: 'app-wheretogo',
   imports: [

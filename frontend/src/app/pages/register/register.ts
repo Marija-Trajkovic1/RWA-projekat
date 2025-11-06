@@ -6,7 +6,7 @@ import { MatAnchor } from "@angular/material/button";
 import { Router, RouterLink } from "@angular/router";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
-import { SnackBar } from '../../../components/notification/snack-bar';
+import { SnackBar } from '../../components/notification/snack-bar';
 import { RegisterDto } from '../../dtos/register.dto';
 @Component({
   selector: 'app-register',

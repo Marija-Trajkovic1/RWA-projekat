@@ -4,8 +4,8 @@ import { Store } from "@ngrx/store";
 import { selectAuthToken } from "../../store/auth-store/auth.selectors";
 import { catchError, EMPTY, exhaustMap, filter, of, take, throwError } from "rxjs";
 import { Router } from "@angular/router";
-import { SnackBar } from "../../components/notification/snack-bar";
-import { DURATION, STYLE_ERROR } from "../constants/snack-bar";
+import { SnackBar } from "../components/notification/snack-bar";
+import { DURATION, STYLE_ERROR } from "../constants/snack-bar.constants";
 import { logout } from "../../store/auth-store/auth.actions";
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {

@@ -4,8 +4,8 @@ import { login, loginFailure, loginSuccess, logout } from "./auth.actions";
 import { catchError, map, mergeMap, of, tap } from "rxjs";
 import { AuthService } from "../../app/services/auth/auth.service";
 import { Router } from "@angular/router";
-import { SnackBar } from "../../components/notification/snack-bar";
-import { DURATION, STYLE_INFO, STYLE_SUCCESS } from "../../app/constants/snack-bar";
+import { SnackBar } from "../../app/components/notification/snack-bar";
+import { DURATION, STYLE_INFO, STYLE_SUCCESS } from "../../app/constants/snack-bar.constants";
  
 @Injectable()
 export class AuthEffects {

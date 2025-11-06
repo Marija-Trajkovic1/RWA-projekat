@@ -12,9 +12,9 @@ export class SnackBar {
   showSnackBar(message: string, duration:number, style:string){
     this.snackBar.open(message, 'Close',{
       duration,
-      panelClass:[style]
+      panelClass:[`${style}`],
+      horizontalPosition: 'right',
+      verticalPosition: 'top'
     })
-  }
-
-  
+  }  
 }

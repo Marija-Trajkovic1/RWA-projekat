@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { Place } from "../../models/place.model";
+import { Place } from "../../app/models/place.model";
 
 export const loadPlaces = createAction('[Places] Load Places');
 export const loadPlacesSuccess = createAction('[Places] Load Places Success', props<{places: Place[] }>());

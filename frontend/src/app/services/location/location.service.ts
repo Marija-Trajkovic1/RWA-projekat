@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
-import { OPEN_STREET_URL } from '../../constants/api-endpoints';
 import { environment } from '../../../environments/environment';
+import { PLACE_NAME_REGULAR } from '../../constants/regular-expressions';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class LocationService {
 
         const placeName = components.municipality || components.city || components.town || components.village || null;
         console.log('Calculated place from opencage: ', placeName);
-        return placeName.replace(/^City of\s+/i, '');
+        return placeName.replace(PLACE_NAME_REGULAR, '').trim();
       }),
       catchError((error)=>{
         console.log('Error during reverse geocoding:', error);
