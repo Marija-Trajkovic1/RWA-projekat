@@ -6,10 +6,11 @@ import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Place } from '../../models/place.model';
 import { loadAttractions } from '../../../store/attraction-store/attractions.actions';
+import { Attraction } from '../../components/attractions/attraction/attraction';
 
 @Component({
   selector: 'app-place-map',
-  imports: [],
+  imports: [Attraction],
   templateUrl: './place-map.html',
   styleUrl: './place-map.scss'
 })
@@ -18,7 +19,7 @@ export class PlaceMap implements AfterViewInit, OnDestroy{
 
   selectedPlace$ = this.store.select(selectSelectedPlace);
 
-  private map!: maplibregl.Map;
+  map!: maplibregl.Map;
   private sub!: Subscription;
 
   constructor() {}
