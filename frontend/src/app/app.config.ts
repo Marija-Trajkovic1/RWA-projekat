@@ -12,6 +12,8 @@ import { AuthEffects } from '../store/auth-store/auth.effects';
 import { placesReducer } from '../store/places-store/places.reducer';
 import { PlacesEffects } from '../store/places-store/places.effects';
 import { authInterceptor } from './interceptors/auth.interceptor';
+import { attractionsReducer } from '../store/attraction-store/attractions.reducer';
+import { AttarctionsEffects } from '../store/attraction-store/attractions.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,8 +24,9 @@ export const appConfig: ApplicationConfig = {
     provideStore({
       auth: authReducer,
       places: placesReducer,
+      attractions: attractionsReducer
     }),
-    provideEffects([AuthEffects, PlacesEffects]),
+    provideEffects([AuthEffects, PlacesEffects, AttarctionsEffects]),
     provideStoreDevtools(),
     provideBrowserGlobalErrorListeners(),
   ]

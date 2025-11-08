@@ -1,6 +1,8 @@
 <div class ="map-container">
-    <div id="map" class="map">
-        <app-attractions [map]="map"></app-attractions>
-    </div>
-
+    <app-attraction-filter (criteriaChange)="onCriteriaChange($event)"></app-attraction-filter>
+    <div id="map" class="map"></div>
+    @if(mapReady){
+        <app-attraction [map]="map" [criteria]="criteria"></app-attraction>
+    }
 </div>
+

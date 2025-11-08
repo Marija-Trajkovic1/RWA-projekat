@@ -1,0 +1,11 @@
+<div class="filter-container">
+    @if(categories$ | async; as categories){
+        @for (category of categories; track category) {
+            <button  class="filter-btn" 
+              [class.selected]="selected.includes(category)"
+              (click)="onToggle(category, !selected.includes(category))">
+            {{ category }}
+          </button>
+        }
+    }
+</div>  
