@@ -1,9 +1,9 @@
 import { createReducer, on } from "@ngrx/store";
-import { initialStateAttractions } from "../store.interfaces";
+import { initialStateAttractionsSummary } from "../store.interfaces";
 import { loadAttractions, loadAttractionsFailure, loadAttractionsSuccess } from "./attractions.actions";
 
 export const attractionsReducer = createReducer(
-    initialStateAttractions,
+    initialStateAttractionsSummary,
 
     on(loadAttractions, (state)=>({
         ...state,

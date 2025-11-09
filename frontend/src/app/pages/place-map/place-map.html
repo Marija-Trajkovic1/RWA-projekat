@@ -3,6 +3,8 @@
     <div id="map" class="map"></div>
     @if(mapReady){
         <app-attraction [map]="map" [criteria]="criteria"></app-attraction>
+
+        <app-attraction-details-component class="details-panel"></app-attraction-details-component>
     }
 </div>
 

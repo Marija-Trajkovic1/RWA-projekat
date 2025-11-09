@@ -1,14 +1,14 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectAttractions } from '../../../../store/attraction-store/attractions.selectors';
+import { selectAttractions } from '../../../../store/attractions-store/attractions.selectors';
 import { map } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-attraction-filter',
   imports: [AsyncPipe],
-  templateUrl: './attraction-filter.html',
-  styleUrl: './attraction-filter.scss'
+  templateUrl: './attraction-filter.component.html',
+  styleUrl: './attraction-filter.component.scss'
 })
 export class AttractionFilter {
   private store = inject(Store);

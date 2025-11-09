@@ -5,13 +5,18 @@ import * as maplibregl from 'maplibre-gl'
 import { Subscription, take } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Place } from '../../models/place.model';
-import { loadAttractions } from '../../../store/attraction-store/attractions.actions';
-import { AttractionComponent } from '../../components/attractions/attraction/attraction';
-import { AttractionFilter } from '../../components/attractions/attraction-filter/attraction-filter';
+import { loadAttractions } from '../../../store/attractions-store/attractions.actions';
+import { AttractionMarkers } from '../../components/attractions/attraction/attraction-markers.component';
+import { AttractionFilter } from '../../components/attractions/attraction-filter/attraction-filter.component';
+import { AttractionDetailsComponent } from '../../components/attractions/attraction-details/attraction-details-component/attraction-details-component';
 
 @Component({
   selector: 'app-place-map',
-  imports: [AttractionComponent, AttractionFilter],
+  imports: [
+    AttractionMarkers, 
+    AttractionFilter, 
+    AttractionDetailsComponent
+  ],
   templateUrl: './place-map.html',
   styleUrl: './place-map.scss'
 })

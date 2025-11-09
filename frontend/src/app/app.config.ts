@@ -12,8 +12,10 @@ import { AuthEffects } from '../store/auth-store/auth.effects';
 import { placesReducer } from '../store/places-store/places.reducer';
 import { PlacesEffects } from '../store/places-store/places.effects';
 import { authInterceptor } from './interceptors/auth.interceptor';
-import { attractionsReducer } from '../store/attraction-store/attractions.reducer';
-import { AttarctionsEffects } from '../store/attraction-store/attractions.effects';
+import { attractionsReducer } from '../store/attractions-store/attractions.reducer';
+import { AttarctionsEffects } from '../store/attractions-store/attractions.effects';
+import { attractionDetailsReducer } from '../store/attraction-store/attraction.reducer';
+import { AttarctionDetailsEffects } from '../store/attraction-store/attraction.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,9 +26,10 @@ export const appConfig: ApplicationConfig = {
     provideStore({
       auth: authReducer,
       places: placesReducer,
-      attractions: attractionsReducer
+      attractions: attractionsReducer,
+      attraction: attractionDetailsReducer
     }),
-    provideEffects([AuthEffects, PlacesEffects, AttarctionsEffects]),
+    provideEffects([AuthEffects, PlacesEffects, AttarctionsEffects, AttarctionDetailsEffects]),
     provideStoreDevtools(),
     provideBrowserGlobalErrorListeners(),
   ]

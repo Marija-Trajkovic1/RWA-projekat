@@ -37,6 +37,12 @@ export class PlacesService {
             throw new NotFoundException('Place for attractions not found!');
         }
 
-        return place.attractions;
+        return place.attractions.map(attraction => ({
+            id: attraction.id,
+            attractionName: attraction.attractionName,
+            category: attraction.category,
+            latitude: attraction.latitude,
+            longitude: attraction.longitude,
+        }));
     }
 }

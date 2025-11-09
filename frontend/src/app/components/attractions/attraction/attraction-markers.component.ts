@@ -1,18 +1,19 @@
 import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatest, debounceTime, distinctUntilChanged, fromEvent, map, startWith, Subject, Subscription, takeUntil } from 'rxjs';
-import { selectAttractions } from '../../../../store/attraction-store/attractions.selectors';
+import { combineLatest, debounceTime, distinctUntilChanged, fromEvent, map, startWith, Subject, takeUntil } from 'rxjs';
+import { selectAttractions } from '../../../../store/attractions-store/attractions.selectors';
 import { CATEGORY_COLORS, CATEGORY_ICONS, IMPORTANT } from '../../../constants/attractions.constants';
-import { Attraction } from '../../../models/attraction.model';
+import { AttractionSummary } from '../../../models/attraction.model';
 import maplibregl from 'maplibre-gl';
+import { loadAttractionDetails } from '../../../../store/attraction-store/attraction.actions';
 
 @Component({
   selector: 'app-attraction',
   imports: [],
-  templateUrl: './attraction.html',
-  styleUrl: './attraction.scss'
+  templateUrl: './attraction-markers.component.html',
+  styleUrl: './attraction-markers.component.scss'
 })
-export class AttractionComponent implements OnInit, OnDestroy{
+export class AttractionMarkers implements OnInit, OnDestroy{
   private store = inject(Store);
   private destroy$ = new Subject<void>();
 
@@ -68,7 +69,7 @@ export class AttractionComponent implements OnInit, OnDestroy{
     this.clearMarkers();
   }
 
-  private updateMarkers(attractions: Attraction[]): void {
+  private updateMarkers(attractions: AttractionSummary[]): void {
     const existingIds = new Set(this.attractionMarkers.map(marker=>marker.getElement().dataset['id']));
     const newIds = new Set(attractions.map(attraction=>attraction.id.toString()));
 
@@ -88,6 +89,20 @@ export class AttractionComponent implements OnInit, OnDestroy{
         const marker = new maplibregl.Marker({element: markerEmement})
           .setLngLat([attraction.longitude, attraction.latitude])
           .addTo(this.map);
+        const namePopup = new maplibregl.Popup({offset: 25})
+          .setHTML(`<strong>${attraction.attractionName}</strong>`);
+        const element = marker.getElement();
+        element.addEventListener('mouseenter', ()=>{
+          namePopup.setLngLat([attraction.longitude, attraction.latitude]).addTo(this.map);
+        });
+        element.addEventListener('mouseleave',()=>{
+          namePopup.remove();
+        });
+
+        element.addEventListener('click', ()=>{
+          this.store.dispatch(loadAttractionDetails({id: attraction.id}));  
+        });
+        
         this.attractionMarkers.push(marker);
       }
     })

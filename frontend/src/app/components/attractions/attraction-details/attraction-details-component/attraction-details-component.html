@@ -1,0 +1,45 @@
+@if (attractionDetails$ | async; as attraction) {
+  <mat-card class="attraction-card">
+    <button mat-icon-button 
+            class="close-button"
+            (click)="closeDetails()"
+            aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <mat-card-header>
+      <mat-card-title>{{ attraction.attractionName }}</mat-card-title>
+      <mat-card-subtitle>{{ attraction.category }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (attraction.shortDescription) {
+        <p class="short-desc">{{ attraction.shortDescription }}</p>
+      }
+
+      @if (attraction.longDescription) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Detailed description</mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>{{ attraction.longDescription }}</p>
+        </mat-expansion-panel>
+      }
+
+      @if (attraction.workingHours) {
+        <p><strong>Working hours:</strong> {{ attraction.workingHours }}</p>
+      }
+
+      @if (attraction.websiteLink) {
+        <p>
+          <strong>Website Link:</strong>
+          <a [href]="attraction.websiteLink" target="_blank" rel="noopener">
+            {{ attraction.websiteLink }}
+          </a>
+        </p>
+      }
+    </mat-card-content>
+  </mat-card>
+} @else {
+  <mat-spinner></mat-spinner>
+}

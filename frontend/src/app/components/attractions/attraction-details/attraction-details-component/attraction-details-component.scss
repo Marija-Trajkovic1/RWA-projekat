@@ -1,0 +1,16 @@
+.attraction-card {
+  position: relative;
+  margin: 16px;
+}
+
+.close-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+}
+
+.long-desc {
+  margin-top: 16px;
+  white-space: pre-line;
+}

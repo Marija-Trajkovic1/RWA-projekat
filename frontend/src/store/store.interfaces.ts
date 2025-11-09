@@ -1,4 +1,4 @@
-import { Attraction } from "../app/models/attraction.model";
+import { AttractionDetails, AttractionSummary } from "../app/models/attraction.model";
 import { Place } from "../app/models/place.model";
 import { User } from "../app/models/user.model";
 
@@ -31,13 +31,25 @@ export const initialStatePlaces : PlacesState = {
 }
 
 export interface AttractionsState {
-    attractions: Attraction[];
+    attractions: AttractionDetails[];
     loading: boolean;
     error: string | null;
 }
 
-export const initialStateAttractions : AttractionsState = {
+export const initialStateAttractionsSummary : AttractionsState = {
     attractions: [],
+    loading: false,
+    error: null,
+}
+
+export interface AttractionDetailsState {
+    attraction: AttractionDetails | null;
+    loading: boolean;
+    error: string | null;
+}
+
+export const initialStateAttractionDetails : AttractionDetailsState = {
+    attraction: null,
     loading: false,
     error: null,
 }
