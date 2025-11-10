@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialStateAttractionDetails } from "../store.interfaces";
-import { loadAttractionDetails, loadAttractionDetailsFailure, loadAttractionDetailsSuccess } from "./attraction.actions";
+import { clearAttractionDetails, loadAttractionDetails, loadAttractionDetailsFailure, loadAttractionDetailsSuccess } from "./attraction.actions";
 
 export const attractionDetailsReducer = createReducer(
     initialStateAttractionDetails,
@@ -23,5 +23,10 @@ export const attractionDetailsReducer = createReducer(
         attraction: null,
         loading: false,
         error
+    })),
+
+    on(clearAttractionDetails, (state)=>({
+        ...state,
+        attraction: null
     }))
 )

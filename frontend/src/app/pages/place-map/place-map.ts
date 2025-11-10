@@ -9,6 +9,7 @@ import { loadAttractions } from '../../../store/attractions-store/attractions.ac
 import { AttractionMarkers } from '../../components/attractions/attraction/attraction-markers.component';
 import { AttractionFilter } from '../../components/attractions/attraction-filter/attraction-filter.component';
 import { AttractionDetailsComponent } from '../../components/attractions/attraction-details/attraction-details-component/attraction-details-component';
+import { selectAttractionDetails } from '../../../store/attraction-store/attraction.selectors';
 
 @Component({
   selector: 'app-place-map',
@@ -21,10 +22,11 @@ import { AttractionDetailsComponent } from '../../components/attractions/attract
   styleUrl: './place-map.scss'
 })
 export class PlaceMap implements AfterViewInit, OnDestroy{
-  private store = inject(Store);
+  store = inject(Store);
   private changeDetector = inject(ChangeDetectorRef);
 
   selectedPlace$ = this.store.select(selectSelectedPlace);
+  attractionDetails$ = this.store.select(selectAttractionDetails);
 
   map!: maplibregl.Map;
   private sub!: Subscription;

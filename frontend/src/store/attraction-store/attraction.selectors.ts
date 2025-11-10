@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { AttractionDetailsState } from "../store.interfaces";
 
-export const selectAttractionDetailsState = createFeatureSelector<AttractionDetailsState>('attraction-details');
+export const selectAttractionDetailsState = createFeatureSelector<AttractionDetailsState>('attraction');
 
 export const selectAttractionDetails = createSelector(
     selectAttractionDetailsState,

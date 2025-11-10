@@ -9,6 +9,7 @@ import { MatSpinner } from '@angular/material/progress-spinner';
 import { AsyncPipe } from '@angular/common';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { clearAttractionDetails } from '../../../../../store/attraction-store/attraction.actions';
 
 @Component({
   selector: 'app-attraction-details-component',
@@ -22,7 +23,6 @@ import { MatIcon } from '@angular/material/icon';
     MatExpansionPanel,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle,
-    MatSpinner,
     MatIconButton,
     MatIcon
 ],
@@ -38,6 +38,6 @@ export class AttractionDetailsComponent {
   }
 
   closeDetails(){
-
+    this.store.dispatch(clearAttractionDetails());
   }
 }

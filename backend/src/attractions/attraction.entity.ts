@@ -31,6 +31,12 @@ export class Attraction{
     @Column({nullable:true})
     websiteLink: string;
 
+    @Column({nullable: true})
+    phoneNumber: string;
+
+    @Column({nullable: true})
+    address: string;
+
     @ManyToOne(()=> Place, (place)=>place.attractions, {onDelete: 'CASCADE'})
     place: Place;
 

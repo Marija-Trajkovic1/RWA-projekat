@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SavedAttraction } from './saved-attractions.entity';
 import { Repository } from 'typeorm';
+import { Attraction } from 'src/attractions/attraction.entity';
+import { User } from 'src/users/user.entity';
 
 @Injectable()
 export class SavedAttractionsService {
@@ -10,4 +12,45 @@ export class SavedAttractionsService {
         private savedAttractionRepository : Repository<SavedAttraction>
     )
     {}
+
+    async newSavedAttraction(userId: number, attractionId : number ){
+        const existing = await this.savedAttractionRepository.findOne({
+            where: {user: {id: userId}, attraction: {id: attractionId}},
+            relations: ['user', 'attraction'],
+        });
+
+        if(existing){
+            await this.savedAttractionRepository.remove(existing);
+            return {saved: false};
+        } else {
+            const newSave = this.savedAttractionRepository.create({
+                user: {id:userId} as User,
+                attraction: {id: attractionId} as Attraction,
+            });
+            await this.savedAttractionRepository.save(newSave);
+            return {saved : true};
+        }
+    }
+
+    async deleteSavedAttraction(userId: number, attractionId: number){
+        const existing = await this.savedAttractionRepository.findOne({
+            where: {user: {id:userId}, attraction: {id:attractionId}},
+        });
+        if(existing){
+            await this.savedAttractionRepository.remove(existing);
+        }
+    }
+
+    async getSavedAttractionsForUser(userId : number){
+       const savedAttractions =await  this.savedAttractionRepository.find({
+            where: {user: {id:userId}},
+            relations: ['attraction', 'attraction.place'],
+        })
+
+        return  savedAttractions.map(savedAttraction =>({
+            attractionId:savedAttraction.id,
+            attractionName: savedAttraction.attraction.attractionName,
+            placeName: savedAttraction.attraction.place.placeName
+        }));
+    }
 }

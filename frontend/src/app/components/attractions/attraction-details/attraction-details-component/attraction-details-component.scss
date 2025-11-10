@@ -1,6 +1,8 @@
 .attraction-card {
   position: relative;
   margin: 16px;
+  padding-top: 40px;
+  overflow: hidden;
 }
 
 .close-button {
@@ -8,9 +10,25 @@
   top: 8px;
   right: 8px;
   z-index: 10;
+  border-radius: 50%;
+}
+
+.close-button mat-icon{
+  font-size: 20px;
+}
+
+.short-desc{
+  margin-bottom: 12px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .long-desc {
   margin-top: 16px;
   white-space: pre-line;
+}
+
+.mat-card-content p {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
