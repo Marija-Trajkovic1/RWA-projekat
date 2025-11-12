@@ -7,6 +7,7 @@ import { AttractionSummary } from '../../../models/attraction.model';
 import maplibregl from 'maplibre-gl';
 import { loadAttractionDetails } from '../../../../store/attraction-store/attraction.actions';
 import { calculateHaversineDistance } from '../../../utils/haversine.util';
+import { AttractionMarkersService } from '../../../services/attraction-markers/attraction-markers.service';
 
 @Component({
   selector: 'app-attraction',
@@ -18,6 +19,8 @@ export class AttractionMarkers implements OnInit, OnDestroy{
   private store = inject(Store);
   private destroy$ = new Subject<void>();
 
+  private attractionMarkersService = inject(AttractionMarkersService);
+
   @Input() map!: maplibregl.Map;
   @Input() criteria: string[] = [];
 
@@ -28,6 +31,7 @@ export class AttractionMarkers implements OnInit, OnDestroy{
   ngOnInit(): void {
     if(!this.map) return;
     const attractions$ = this.store.select(selectAttractions);
+
     const zoom$ = fromEvent(this.map, 'zoom').pipe(
       startWith(this.map.getZoom()),
       map(()=> this.map.getZoom()),
@@ -42,24 +46,12 @@ export class AttractionMarkers implements OnInit, OnDestroy{
     combineLatest([attractions$, zoom$, center$])
     .pipe(
       debounceTime(150),
-      map(([attractions, zoom, center]) => {
-        if(zoom<14) return [];
-        const alwaysVisibleAttractions = attractions.filter(attraction=> attraction.category === IMPORTANT);
-        let filteredAttractionsByCriteria = attractions;
-        if(this.criteria.length>0){
-          filteredAttractionsByCriteria = filteredAttractionsByCriteria.filter(attraction=>this.criteria.includes(attraction.category));
-        }
-        const combinedAttractions =[...new Set([...filteredAttractionsByCriteria, ...alwaysVisibleAttractions])];
-        return combinedAttractions.filter(attraction => {
-          const distance = calculateHaversineDistance(
-            [center.lng, center.lat],
-            [attraction.longitude, attraction.latitude]
-          );
-          return distance<=1;
-        })
-      }),
+      map(([attractions, zoom, center]) => 
+        this.attractionMarkersService.filterAttractions(attractions, this.criteria, zoom, center)
+      ),
       takeUntil(this.destroy$)
-    ).subscribe(filteredAttractions => {
+    )
+    .subscribe(filteredAttractions => {
       this.updateMarkers(filteredAttractions);
     })
   }
@@ -129,5 +121,4 @@ export class AttractionMarkers implements OnInit, OnDestroy{
     this.attractionMarkers=[];
   }
 
-  
 }

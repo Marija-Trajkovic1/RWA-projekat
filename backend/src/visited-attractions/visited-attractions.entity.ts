@@ -16,5 +16,4 @@ export class VisitedAttraction{
     @ManyToOne(()=>Attraction, (attraction)=>attraction.visitedBy, {onDelete:'CASCADE'})
     attraction: Attraction;
 
-
 }

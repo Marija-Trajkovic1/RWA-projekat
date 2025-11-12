@@ -10,9 +10,9 @@ export class SavedAttractionsController {
     {}
 
     @UseGuards(JwtAuthGuard)
-    @Get('getSavedAttraction/:attractionId')
-    async getSavedAttraction(@Param('attractionId')attractionId: number, @GetUser('id') userId: number){
-        return this.savedAttractionsService.getSavedAttraction(userId, attractionId);
+    @Get('getIsSavedAttraction/:attractionId')
+    async getIsSavedAttraction(@Param('attractionId')attractionId: number, @GetUser('id') userId: number){
+        return this.savedAttractionsService.getIsSavedAttraction(userId, attractionId);
     }
 
     @UseGuards(JwtAuthGuard)
@@ -28,8 +28,8 @@ export class SavedAttractionsController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Get('getSavedAttractions')
-    async getSavedAttractions(@GetUser('id') userId: number): Promise<SavedAttractionsByUserDto[]>{
+    @Get('getSavedAttractionsForUser')
+    async getSavedAttractionsForUser(@GetUser('id') userId: number): Promise<SavedAttractionsByUserDto[]>{
         return this.savedAttractionsService.getSavedAttractionsForUser(userId);
     }
 }

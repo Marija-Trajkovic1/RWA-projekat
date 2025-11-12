@@ -1,7 +1,7 @@
 <mat-card-actions class="action-buttons">
     <div class="action-item" (click)="onUpdateSave()">
         <button mat-icon-button color="warn" [disabled]="!attractionId">
-            @if(!(loading$ | async)){
+            @if(!(loadingIsSaved$ | async)){
             <mat-icon>
                 {{(isSaved$ | async) ? 'favorite': 'favorite_border'}}
             </mat-icon>

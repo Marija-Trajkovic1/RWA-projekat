@@ -11,7 +11,7 @@ export class SavedAttractionService {
 
   getSavedAttraction(attractionId: number): Observable<{isSaved: boolean}>{
     return this.http.get<{ isSaved: boolean}>(
-      `${environment.apiUrl}/saved-attractions/getSavedAttraction/${attractionId}`
+      `${environment.apiUrl}/saved-attractions/getIsSavedAttraction/${attractionId}`
     );
   }
 

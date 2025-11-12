@@ -23,3 +23,5 @@ export const CATEGORY_ICONS: Record<string, string> = {
     'Religion' : 'assets/marker-icons/religion.svg',
     'Shopping' : 'assets/marker-icons/shopping-cart.svg'   
 }
+
+export const MAX_DISTANCE = 1;

@@ -24,10 +24,10 @@ export class AttractionActionsComponent {
   @Input() attractionId!: number;
 
   isSaved$!: Observable<boolean | null>;
-  loading$!: Observable<boolean>;
+  loadingIsSaved$!: Observable<boolean>;
 
   constructor(private store: Store) {
-    this.loading$ = this.store.select(selectSavedAttractionLoading);
+    this.loadingIsSaved$ = this.store.select(selectSavedAttractionLoading);
     this.isSaved$ = this.store.select(selectSavedAttraction);
   }
 

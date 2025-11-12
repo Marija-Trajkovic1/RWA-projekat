@@ -13,7 +13,7 @@ export class SavedAttractionsService {
     )
     {}
 
-    async getSavedAttraction(userId: number, attractionId: number){
+    async getIsSavedAttraction(userId: number, attractionId: number){
         const existing = await this.savedAttractionRepository.findOne({
             where: {user: {id:userId}, attraction: {id:attractionId}},
             relations:['user', 'attraction'],
