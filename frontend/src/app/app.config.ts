@@ -13,23 +13,25 @@ import { placesReducer } from '../store/places-store/places.reducer';
 import { PlacesEffects } from '../store/places-store/places.effects';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { attractionsReducer } from '../store/attractions-store/attractions.reducer';
-import { AttarctionsEffects } from '../store/attractions-store/attractions.effects';
+import { AttractionsEffects } from '../store/attractions-store/attractions.effects';
 import { attractionDetailsReducer } from '../store/attraction-store/attraction.reducer';
-import { AttarctionDetailsEffects } from '../store/attraction-store/attraction.effects';
+import { AttractionDetailsEffects } from '../store/attraction-store/attraction.effects';
+import { savedAttractionsReducer } from '../store/saved-attraction/saved-attraction.reducer';
+import { SavedAttractionEffects } from '../store/saved-attraction/saved-attraction.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
     provideHttpClient(withInterceptors([authInterceptor])),
     provideStore({
       auth: authReducer,
       places: placesReducer,
       attractions: attractionsReducer,
-      attraction: attractionDetailsReducer
+      attraction: attractionDetailsReducer,
+      savedattraction : savedAttractionsReducer
     }),
-    provideEffects([AuthEffects, PlacesEffects, AttarctionsEffects, AttarctionDetailsEffects]),
+    provideEffects([AuthEffects, PlacesEffects, AttractionsEffects, AttractionDetailsEffects, SavedAttractionEffects]),
+    provideRouter(routes),
+    provideZoneChangeDetection({ eventCoalescing: true }),
     provideStoreDevtools(),
     provideBrowserGlobalErrorListeners(),
   ]

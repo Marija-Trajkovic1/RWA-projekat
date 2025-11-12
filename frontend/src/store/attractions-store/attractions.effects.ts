@@ -4,7 +4,7 @@ import { AttractionsService } from "../../app/services/attractions/attractions.s
 import { loadAttractions, loadAttractionsFailure, loadAttractionsSuccess } from "./attractions.actions";
 import { catchError, map, mergeMap, of } from "rxjs";
 
-export class AttarctionsEffects{
+export class AttractionsEffects{
     private actions$ = inject(Actions);
     private attractionsService = inject(AttractionsService);
 

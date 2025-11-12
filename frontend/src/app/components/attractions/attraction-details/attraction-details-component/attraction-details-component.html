@@ -23,6 +23,7 @@
             <mat-panel-title>Detailed description</mat-panel-title>
           </mat-expansion-panel-header>
           <p>{{ attraction.longDescription }}</p>
+          
         </mat-expansion-panel>
       }
 
@@ -39,5 +40,8 @@
         </p>
       }
     </mat-card-content>
+    <app-attraction-actions-component [attractionId]="attraction.id"></app-attraction-actions-component> 
+   
   </mat-card>
-}
+
+ }

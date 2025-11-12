@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SavedAttraction } from './saved-attractions.entity';
 import { Repository } from 'typeorm';
@@ -13,7 +13,26 @@ export class SavedAttractionsService {
     )
     {}
 
-    async newSavedAttraction(userId: number, attractionId : number ){
+    async getSavedAttraction(userId: number, attractionId: number){
+        const existing = await this.savedAttractionRepository.findOne({
+            where: {user: {id:userId}, attraction: {id:attractionId}},
+            relations:['user', 'attraction'],
+        });
+
+        if(existing){
+            return {isSaved: true};
+        }else{
+            return {isSaved: false};
+        }
+    }
+
+    async updateSavedAttractionStatus(userId: number, attractionId : number ){
+        if(!userId){
+            throw new BadRequestException('userId is required!');
+        }
+        if(!attractionId){
+            throw new BadRequestException('attractionId is required');
+        }
         const existing = await this.savedAttractionRepository.findOne({
             where: {user: {id: userId}, attraction: {id: attractionId}},
             relations: ['user', 'attraction'],
@@ -21,14 +40,14 @@ export class SavedAttractionsService {
 
         if(existing){
             await this.savedAttractionRepository.remove(existing);
-            return {saved: false};
+            return {isSaved: false};
         } else {
             const newSave = this.savedAttractionRepository.create({
                 user: {id:userId} as User,
                 attraction: {id: attractionId} as Attraction,
             });
             await this.savedAttractionRepository.save(newSave);
-            return {saved : true};
+            return {isSaved : true};
         }
     }
 

@@ -53,3 +53,15 @@ export const initialStateAttractionDetails : AttractionDetailsState = {
     loading: false,
     error: null,
 }
+
+export interface SavedAttractionState {
+    isSaved: boolean | null;
+    loading: boolean;
+    error: string | null;
+}
+
+export const initialStateSavedAttraction : SavedAttractionState = {
+    isSaved: null,
+    loading: false,
+    error: null,
+}

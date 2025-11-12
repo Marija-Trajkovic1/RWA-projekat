@@ -50,7 +50,7 @@ export class PlaceMap implements AfterViewInit, OnDestroy{
     if(this.map) this.map.remove();
   }
 
-  onCriteriaChange(criteria: string[]):void{
+  onCriteriaChange(criteria: string[]): void{
     this.criteria=criteria;
   }
 

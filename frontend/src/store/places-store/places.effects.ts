@@ -7,7 +7,7 @@ import { PlacesService } from "../../app/services/places/places.service";
 @Injectable()
 export class PlacesEffects{
     private actions$ = inject(Actions);
-    private placesService = inject(PlacesService)
+    private placesService = inject(PlacesService);
 
     constructor(){
         console.log('Test from effect places.')

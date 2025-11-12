@@ -1,0 +1,23 @@
+<mat-card-actions class="action-buttons">
+    <div class="action-item" (click)="onUpdateSave()">
+        <button mat-icon-button color="warn" [disabled]="!attractionId">
+            @if(!(loading$ | async)){
+            <mat-icon>
+                {{(isSaved$ | async) ? 'favorite': 'favorite_border'}}
+            </mat-icon>
+            }
+            
+        </button>
+        <span>Save</span>
+    </div>
+
+    <div class="action-item" (click)="onMarkVisited()">
+        <button mat-icon-button color="accent">
+            <mat-icon>
+                <!-- {{isVisited ? 'star': 'star_border'}} -->
+            </mat-icon>
+        </button>
+        <span>Visited</span>
+    </div>
+
+</mat-card-actions>

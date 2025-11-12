@@ -1,5 +1,7 @@
 <div class="filter-container">
     <div class="filter-title">Choose a category to display objects:</div>
+
+    <div class="filter-buttons-wrapper">
     @if(categories$ | async; as categories){
         @for (category of categories; track category) {
             <button  class="filter-btn" 
@@ -9,4 +11,5 @@
           </button>
         }
     }
+    </div>
 </div>  

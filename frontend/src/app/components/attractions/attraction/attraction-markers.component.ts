@@ -6,6 +6,7 @@ import { CATEGORY_COLORS, CATEGORY_ICONS, IMPORTANT } from '../../../constants/a
 import { AttractionSummary } from '../../../models/attraction.model';
 import maplibregl from 'maplibre-gl';
 import { loadAttractionDetails } from '../../../../store/attraction-store/attraction.actions';
+import { calculateHaversineDistance } from '../../../utils/haversine.util';
 
 @Component({
   selector: 'app-attraction',
@@ -50,7 +51,7 @@ export class AttractionMarkers implements OnInit, OnDestroy{
         }
         const combinedAttractions =[...new Set([...filteredAttractionsByCriteria, ...alwaysVisibleAttractions])];
         return combinedAttractions.filter(attraction => {
-          const distance = this.calculateDistance(
+          const distance = calculateHaversineDistance(
             [center.lng, center.lat],
             [attraction.longitude, attraction.latitude]
           );
@@ -128,23 +129,5 @@ export class AttractionMarkers implements OnInit, OnDestroy{
     this.attractionMarkers=[];
   }
 
-  private calculateDistance(coord1: [number, number], coord2:[number, number]): number {
-    const earthRadiusInKm = 6371;
-    const [lon1, lat1] = coord1;
-    const [lon2, lat2] = coord2;
-
-    const deltaLatitude = this.toRad(lat2-lat1);
-    const deltaLongitude = this.toRad(lon2-lon1);
-    const haversineOfCentralAngle = Math.sin(deltaLatitude/2)*Math.sin(deltaLatitude / 2) +
-      Math.cos(this.toRad(lat1)) *
-        Math.cos(this.toRad(lat2)) *
-        Math.sin(deltaLongitude / 2) *
-        Math.sin(deltaLongitude / 2);
-    const centralAngle =2 * Math.atan2(Math.sqrt(haversineOfCentralAngle), Math.sqrt(1-haversineOfCentralAngle));
-    return earthRadiusInKm*centralAngle;
-  }
-
-  private toRad(value: number): number {
-    return (value*Math.PI) /180;
-  }
+  
 }
