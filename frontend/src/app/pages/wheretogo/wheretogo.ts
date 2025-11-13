@@ -15,6 +15,7 @@ import { EMPTY, filter, Observable, switchMap, tap, withLatestFrom } from 'rxjs'
 import { LocationService } from '../../services/location/location.service';
 import { PlacesService } from '../../services/places/places.service';
 import { DURATION, STYLE_ERROR, STYLE_INFO, STYLE_SUCCESS } from '../../constants/snack-bar.constants';
+import { MatProgressSpinner } from '@angular/material/progress-spinner'
 @Component({
   selector: 'app-wheretogo',
   imports: [
@@ -28,7 +29,8 @@ import { DURATION, STYLE_ERROR, STYLE_INFO, STYLE_SUCCESS } from '../../constant
     AsyncPipe,
     MatSelectModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressSpinner
   ],
   templateUrl: './wheretogo.html',
   styleUrls: ['./wheretogo.scss', '../../styles/shared-style.scss']
@@ -42,6 +44,7 @@ export class WhereToGo implements OnInit {
   private locationService = inject(LocationService)
 
   cityForm: FormGroup;
+  loadingMap = false;
 
   places$ = this.store.select(selectAllPlaces);
   loading$ = this.store.select(selectPlacesLoading);
@@ -69,9 +72,12 @@ export class WhereToGo implements OnInit {
       tap(([cityId, places])=>{
           const place = places.find(p=>p.id===cityId);
           if(place){
+            this.loadingMap = true;
             this.store.dispatch(selectPlace({place}));
             console.log('Selected: ', place);
-            this.router.navigate(['/placemap']);
+            this.router.navigate(['/placemap']).then(()=>{
+              this.loadingMap =false;
+            });
           }else{
             console.log('Place not found for selected cityId:', cityId);
           }
@@ -85,6 +91,8 @@ export class WhereToGo implements OnInit {
       this.snackBar.showSnackBar('Geolocation is not supported by your browser.', DURATION, STYLE_ERROR);
       return;
      }
+
+     this.loadingMap=true;
 
      const geolocation$ = new Observable<GeolocationPosition>(observer =>{
       navigator.geolocation.getCurrentPosition(
@@ -114,13 +122,14 @@ export class WhereToGo implements OnInit {
       switchMap(placeName=>{
         if(!placeName){
           this.snackBar.showSnackBar('Unknown location! Try again!', DURATION, STYLE_ERROR);
+          this.loadingMap = false;
           return EMPTY;
         }
-        console.log('Place name before database: ', placeName);
         return this.placesService.getPlaceByName(placeName).pipe(
           tap(place=>{
             if(!place){
               this.snackBar.showSnackBar(`Informations for ${placeName} is not available yet!`, DURATION, STYLE_INFO);
+              this.loadingMap = false;
             } 
           })
         )
@@ -128,6 +137,7 @@ export class WhereToGo implements OnInit {
      )
      .subscribe({
       next:place =>{
+        this.loadingMap = false;
         if(place){
           console.log('Place to dispatch action: ', place.placeName, place.latitude, place.longitude)
           this.store.dispatch(selectPlace({place}));
@@ -137,6 +147,7 @@ export class WhereToGo implements OnInit {
       },
       error: err =>{
         console.error('Error while getting location data:', err);
+        this.loadingMap = false;
         this.snackBar.showSnackBar('Unable to get your location. Please allow location access.', DURATION, STYLE_ERROR);
       }
      })

@@ -1,7 +1,7 @@
 import { Controller, Delete, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { SavedAttractionsService } from './saved-attractions.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
-import { SavedAttractionsByUserDto } from './dto/saved-attractions-by-user';
+import { SavedAttractionsByUserDto } from './dto/saved-attractions-by-user.dto';
 import { GetUser } from 'src/decorators/get-user.decorator';
 
 @Controller('saved-attractions')

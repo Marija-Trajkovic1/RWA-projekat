@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 export class SavedAttractionService {
   constructor(private http: HttpClient){}
 
-  getSavedAttraction(attractionId: number): Observable<{isSaved: boolean}>{
+  getIsSavedAttraction(attractionId: number): Observable<{isSaved: boolean}>{
     return this.http.get<{ isSaved: boolean}>(
       `${environment.apiUrl}/saved-attractions/getIsSavedAttraction/${attractionId}`
     );

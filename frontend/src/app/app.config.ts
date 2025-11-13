@@ -18,18 +18,27 @@ import { attractionDetailsReducer } from '../store/attraction-store/attraction.r
 import { AttractionDetailsEffects } from '../store/attraction-store/attraction.effects';
 import { savedAttractionsReducer } from '../store/saved-attraction/saved-attraction.reducer';
 import { SavedAttractionEffects } from '../store/saved-attraction/saved-attraction.effects';
+import { visitedAttractionReducer } from '../store/visited-attraction/visited-attraction.reducer';
+import { VisitedAttractionEffect } from '../store/visited-attraction/visited-attraction.effects';
+import { clearStateMetaReduser } from '../store/meta-reducers/clear-state.metareducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withInterceptors([authInterceptor])),
-    provideStore({
+    provideStore(
+      {
       auth: authReducer,
       places: placesReducer,
       attractions: attractionsReducer,
       attraction: attractionDetailsReducer,
-      savedattraction : savedAttractionsReducer
-    }),
-    provideEffects([AuthEffects, PlacesEffects, AttractionsEffects, AttractionDetailsEffects, SavedAttractionEffects]),
+      savedattraction : savedAttractionsReducer,
+      visitedattraction : visitedAttractionReducer
+      },
+      {
+        metaReducers: [clearStateMetaReduser]
+      }
+    ),
+    provideEffects([AuthEffects, PlacesEffects, AttractionsEffects, AttractionDetailsEffects, SavedAttractionEffects, VisitedAttractionEffect]),
     provideRouter(routes),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideStoreDevtools(),

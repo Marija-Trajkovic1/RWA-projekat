@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VisitedAttraction } from './visited-attractions.entity';
 import { Repository } from 'typeorm';
+import { VisitedAttractionDto } from './dto/visited-attraction.dto';
+import { parse } from 'path';
 
 @Injectable()
 export class VisitedAttractionsService {
@@ -18,30 +20,47 @@ export class VisitedAttractionsService {
         });
 
         if(existing){
-            return {isSaved: true};
+            return {isVisited: true};
         }else{
-            return {isSaved: false};
+            return {isVisited: false};
         }
     }
 
-    async updateVisitedAttractionStatus(attractionId: number, userId: number, rating: number){
+    async updateVisitedAttractionStatus(attractionId: number, userId: number, rating: number): Promise<VisitedAttractionDto>{
         const existing = await this.visitedAttractionRepository.findOne({
            where: {user: {id:userId}, attraction: {id:attractionId}},
             relations: ['user', 'attraction'],
         });
+        
+        let visited: VisitedAttraction; 
 
         if(existing){
             existing.rating = rating;
-            const saveVisited = await this.visitedAttractionRepository.save(existing);
-            return saveVisited;
-        }else{
+            visited = await this.visitedAttractionRepository.save(existing);
+        } else {
             const newVisited = this.visitedAttractionRepository.create({
                 user: {id: userId},
                 attraction: {id: attractionId},
                 rating,
             });
-            const saveVisited = await this.visitedAttractionRepository.save(newVisited);
-            return saveVisited;
+            visited = await this.visitedAttractionRepository.save(newVisited);   
         }
+
+        return {
+            id: visited.id,
+            attractionId: visited.attraction.id,
+            userId: visited.user.id,
+            rating: visited.rating,
+        }
+    }
+
+    async getAverageRatingForAttraction(attractionId: number): Promise<{ averageRating: number }>{
+        const countAverageRating = await this.visitedAttractionRepository
+            .createQueryBuilder('visitedAttraction')
+            .select('AVG(visitedAttraction.rating)', 'avg')
+            .where('visitedAttraction.attractionId = :attractionId', {attractionId})
+            .getRawOne<{avg: number}>();
+        const averageRating = countAverageRating?.avg ?? 0;
+        return {averageRating}
     }
 }

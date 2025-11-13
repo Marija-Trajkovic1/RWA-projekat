@@ -23,11 +23,15 @@
                     <mat-icon>my-location</mat-icon>
                     Use my current location
                 </button>
-
             </div>
-            @if (loading$ | async){
-                <p>Loading cities...</p>
+
+            @if(loadingMap) {
+                <div class="overlay">
+                    <mat-spinner></mat-spinner>
+                    <p>Map is loading...</p>
+                </div>
             }
+           
         </mat-card-content>
     </mat-card>
 </div>

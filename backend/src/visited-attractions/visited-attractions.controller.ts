@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { VisitedAttractionsService } from './visited-attractions.service';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { GetUser } from 'src/decorators/get-user.decorator';
+import { VisitedAttractionDto } from './dto/visited-attraction.dto';
 
 @Controller('visited-attractions')
 export class VisitedAttractionsController {
@@ -9,7 +10,7 @@ export class VisitedAttractionsController {
     {}
 
     @UseGuards(JwtAuthGuard)
-    @Get('getVisitedAAttraction/:attractionId')
+    @Get('getVisitedAttraction/:attractionId')
     async getVisitedAttraction(@Param('attractionId') attractionId: number, @GetUser('id')userId: number){
         return this.visitedAttractionsService.getVisitedAttraction(userId, attractionId);
     }
@@ -20,7 +21,14 @@ export class VisitedAttractionsController {
         @Param('attractionId')attractionId: number,
         @GetUser('id') userId: number,
         @Body('rating') rating: number
-    ){
-        return this.visitedAttractionsService.updateVisitedAttractionStatus(userId, attractionId, rating);
+    ):Promise<VisitedAttractionDto>{
+        return this.visitedAttractionsService.updateVisitedAttractionStatus(attractionId, userId, rating);
+    }
+
+
+    @UseGuards(JwtAuthGuard)
+    @Get('getAverageRatingForAttraction/:attractionId')
+    async getAverageRatingForAttraction(@Param('attractionId')attractionId: number):Promise<{averageRating : number}>{
+        return this.visitedAttractionsService.getAverageRatingForAttraction(attractionId);
     }
 }

@@ -14,8 +14,8 @@ export class SavedAttractionEffects {
     loadSavedAttraction$ = createEffect(()=>
         this.actions$.pipe(
             ofType(loadSavedAttraction),
-            mergeMap(({ attractionId })=>
-                this.savedAttractionService.getSavedAttraction(attractionId).pipe(
+            switchMap(({ attractionId })=>
+                this.savedAttractionService.getIsSavedAttraction(attractionId).pipe(
                     map((response)=>
                         loadSavedAttractionSuccess({
                             attractionId,

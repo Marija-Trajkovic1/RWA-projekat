@@ -5,17 +5,18 @@
             <mat-icon>
                 {{(isSaved$ | async) ? 'favorite': 'favorite_border'}}
             </mat-icon>
-            }
-            
+            }  
         </button>
         <span>Save</span>
     </div>
 
     <div class="action-item" (click)="onMarkVisited()">
-        <button mat-icon-button color="accent">
+        <button mat-icon-button color="accent" [disabled]="!attractionId">
+            @if(!(loadingIsVisited$ | async)){
             <mat-icon>
-                <!-- {{isVisited ? 'star': 'star_border'}} -->
+                {{(isVisited$ | async) ? 'star': 'star_border'}}
             </mat-icon>
+            }
         </button>
         <span>Visited</span>
     </div>

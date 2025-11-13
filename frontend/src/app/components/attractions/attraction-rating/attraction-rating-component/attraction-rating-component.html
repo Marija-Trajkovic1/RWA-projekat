@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Rate this attraction</h2>
+<form [formGroup]="ratingForm">
+  <mat-dialog-content>
+    <mat-form-field appearance="fill" class="rating-input">
+      <mat-label>Enter rating (1-5)</mat-label>
+      <input matInput type="number" formControlName="rating" min="1" max="5">
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" (click)="submit()" [disabled]="ratingForm.invalid">Save</button>
+    <button mat-button (click)="cancel()">Cancel</button>
+</mat-dialog-actions>
+</form>

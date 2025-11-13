@@ -1,6 +1,7 @@
 import { AttractionDetails, AttractionSummary } from "../app/models/attraction.model";
 import { Place } from "../app/models/place.model";
 import { User } from "../app/models/user.model";
+import { VisitedAttraction } from "../app/models/visited.model";
 
 export interface AuthState {
     user: User | null;
@@ -64,4 +65,20 @@ export const initialStateSavedAttraction : SavedAttractionState = {
     isSaved: null,
     loading: false,
     error: null,
+}
+
+export interface VisitedAttractionState {
+    isVisited: boolean | null;
+    visitedAttraction: VisitedAttraction | null;
+    averageRating: number |  null;
+    loading: boolean;
+    error: string | null;
+}
+
+export const initialStateVisitedAttraction: VisitedAttractionState = {
+    isVisited: null,
+    visitedAttraction: null,
+    averageRating: null,
+    loading: false,
+    error: null
 }

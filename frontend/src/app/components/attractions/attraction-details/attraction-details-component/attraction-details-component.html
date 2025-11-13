@@ -39,6 +39,12 @@
           </a>
         </p>
       }
+
+      @if(averageRating$ | async; as average){
+        <p>
+          <strong>Average Rating:</strong> {{average | number:'1.1-1'}} ⭐
+        </p>
+      }
     </mat-card-content>
     <app-attraction-actions-component [attractionId]="attraction.id"></app-attraction-actions-component> 
    

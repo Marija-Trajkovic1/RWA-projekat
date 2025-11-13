@@ -22,6 +22,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         }
 
     return store.select(selectAuthToken).pipe(
+        take(1),
         exhaustMap(token=> { 
             if(token && !isTokenExpired(token)){
                 const cloned = req.clone({
