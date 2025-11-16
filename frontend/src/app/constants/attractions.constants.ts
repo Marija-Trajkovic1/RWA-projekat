@@ -12,18 +12,22 @@ export const CATEGORY_COLORS: Record<string, string> = {
     'Nature' : 'green',
     'Religion' : 'purple',
     'Shopping' : 'yellow',
+    'Square' : 'gray'
 }
 
 export const CATEGORY_ICONS: Record<string, string> = {   
-    'Archeologic' : 'assets/marker-icons/archeologic.svg', 
+    'Archeologic' : 'assets/marker-icons/archeologic.svg',
+    'Architecture' : 'assets/marker-icons/pillar.svg', 
     'Art' : 'assets/marker-icons/art.svg',
     'Culture' : 'assets/marker-icons/museum.svg',
     'Entertainment' : 'assets/marker-icons/entertainment.svg',
+    'Exchange Office': 'assets/marker-icons/money-transfer.svg',
     'Food' : 'assets/marker-icons/food.svg',
     'Important' : 'assets/marker-icons/important.svg',
     'Nature' : 'assets/marker-icons/nature.svg',
     'Religion' : 'assets/marker-icons/religion.svg',
-    'Shopping' : 'assets/marker-icons/shopping-cart.svg'   
+    'Shopping' : 'assets/marker-icons/shopping-cart.svg', 
+    'Square' : 'assets/marker-icons/pillar.svg', 
 }
 
 export const MAX_DISTANCE = 1;
