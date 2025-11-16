@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatToolbar } from '@angular/material/toolbar';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { selectAuthToken } from '../../../store/auth-store/auth.selectors';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { logout } from '../../../store/auth-store/auth.actions';
 import { AsyncPipe } from '@angular/common';
+import { selectSelectedPlace } from '../../../store/places-store/places.selectors';
 
 @Component({
   selector: 'app-navbar',
@@ -21,9 +22,10 @@ import { AsyncPipe } from '@angular/common';
 })
 export class Navbar {
   private store = inject(Store);
-  token$: Observable<string |null> = this.store.select(selectAuthToken);
+  token$: Observable<string | null> = this.store.select(selectAuthToken);
+  selectedPlace$ = this.store.select(selectSelectedPlace);
 
-  constructor(){
+  constructor(public router: Router){
     this.token$.subscribe(token => {
     console.log('🔹 Token u Navbar:', token);
   });

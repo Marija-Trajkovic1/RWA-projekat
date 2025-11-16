@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../services/auth/auth.service';
 import { SnackBar } from '../../components/notification/snack-bar';
 import { RegisterDto } from '../../dtos/register.dto';
+import { DURATION, ENTER_VALID_DATA_MESSAGE, REGISTRATION_FAILED_MESSAGE, SUCCEESSFULY_REGISTERED_MESSAGE } from '../../constants/snack-bar.constants';
 @Component({
   selector: 'app-register',
   imports: [
@@ -30,7 +31,6 @@ export class Register {
   private formBuilder = inject(FormBuilder);
   private snackBar= inject(SnackBar);
   registerForm: FormGroup;
-  duration :number =10000;
 
   constructor(private authService:AuthService, private router: Router){
     this.registerForm=this.formBuilder.group({
@@ -47,20 +47,20 @@ export class Register {
       this.authService.register(registerData).subscribe({
         next:(response)=>{
           console.log('User registered: ', response);
-          this.snackBar.showSnackBar('Successfully registered! Redirecting...', this.duration,'success');
+          this.snackBar.showSnackBar(SUCCEESSFULY_REGISTERED_MESSAGE, DURATION);
           setTimeout(() => {
             this.router.navigate(['/login']);
-          }, this.duration);
+          }, DURATION);
     
         }, 
         error:(err)=>{
           console.log('Registration failed:', err);
           
-          this.snackBar.showSnackBar('Registration failed! Check your data!',this.duration, 'error');
+          this.snackBar.showSnackBar(REGISTRATION_FAILED_MESSAGE, DURATION);
         }
       })
     }else{
-      this.snackBar.showSnackBar('Enter valid data to register!', this.duration, 'info');
+      this.snackBar.showSnackBar(ENTER_VALID_DATA_MESSAGE, DURATION);
     }
   }
 }

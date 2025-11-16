@@ -11,6 +11,20 @@ export class AttractionsService {
 
     async getDetailsForAttraction(id: number){
         const attraction = await this.attractionRepository.findOneBy({id});
-        return attraction;
+        
+        if(attraction){
+            return {
+            id: attraction.id,
+            attractionName:attraction.attractionName,
+            shortDescription: attraction.shortDescription,
+            longDescription: attraction.longDescription,
+            category:attraction.category,
+            workingHours: attraction.workingHours,
+            websiteLink: attraction.websiteLink,
+            address: attraction.address,
+            phoneNumber: attraction.phoneNumber
+            }
+        }
+        return null;
     }
 }

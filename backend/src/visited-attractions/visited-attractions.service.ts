@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { VisitedAttraction } from './visited-attractions.entity';
 import { Repository } from 'typeorm';
 import { VisitedAttractionDto } from './dto/visited-attraction.dto';
-import { parse } from 'path';
 
 @Injectable()
 export class VisitedAttractionsService {
@@ -31,26 +30,29 @@ export class VisitedAttractionsService {
            where: {user: {id:userId}, attraction: {id:attractionId}},
             relations: ['user', 'attraction'],
         });
-        
-        let visited: VisitedAttraction; 
 
         if(existing){
             existing.rating = rating;
-            visited = await this.visitedAttractionRepository.save(existing);
+            const visited = await this.visitedAttractionRepository.save(existing);
+            return {
+                id: visited.id,
+                attractionId: visited.attraction.id,
+                userId: visited.user.id,
+                rating: visited.rating,
+            }
         } else {
             const newVisited = this.visitedAttractionRepository.create({
                 user: {id: userId},
                 attraction: {id: attractionId},
                 rating,
             });
-            visited = await this.visitedAttractionRepository.save(newVisited);   
-        }
-
-        return {
-            id: visited.id,
-            attractionId: visited.attraction.id,
-            userId: visited.user.id,
-            rating: visited.rating,
+            const visited = await this.visitedAttractionRepository.save(newVisited); 
+            return {
+                id: visited.id,
+                attractionId: visited.attraction.id,
+                userId: visited.user.id,
+                rating: visited.rating,
+            }  
         }
     }
 

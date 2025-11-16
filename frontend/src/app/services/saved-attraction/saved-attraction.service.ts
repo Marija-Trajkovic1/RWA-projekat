@@ -11,13 +11,13 @@ export class SavedAttractionService {
 
   getIsSavedAttraction(attractionId: number): Observable<{isSaved: boolean}>{
     return this.http.get<{ isSaved: boolean}>(
-      `${environment.apiUrl}/saved-attractions/getIsSavedAttraction/${attractionId}`
+      `${environment.savedAttractionsApiUrl}/getIsSavedAttraction/${attractionId}`
     );
   }
 
   updateSavedAttractionStatus(attractionId: number): Observable<{isSaved: boolean}>{
     return this.http.post<{ isSaved: boolean}>(
-      `${environment.apiUrl}/saved-attractions/updateSavedAttractionStatus/${attractionId}`,
+      `${environment.savedAttractionsApiUrl}/updateSavedAttractionStatus/${attractionId}`,
       {}
     );
   }

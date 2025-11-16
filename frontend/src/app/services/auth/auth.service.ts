@@ -12,12 +12,11 @@ export class AuthService {
   constructor(private http:HttpClient){} 
   
   register(registerData:RegisterDto): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/auth/register`, registerData)
+    return this.http.post(`${environment.authApiUrl}/register`, registerData)
   }
 
   login(loginData:LoginDto): Observable<{access_token: string}> {
-    return this.http.post<{access_token:string}>(`${environment.apiUrl}/auth/login`, loginData);
+    return this.http.post<{access_token:string}>(`${environment.authApiUrl}/login`, loginData);
   }
-
 
 }

@@ -2,10 +2,10 @@ import { HttpErrorResponse, HttpInterceptorFn } from "@angular/common/http";
 import { inject, NgZone } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { selectAuthToken } from "../../store/auth-store/auth.selectors";
-import { catchError, EMPTY, exhaustMap, filter, of, take, throwError } from "rxjs";
+import { catchError, EMPTY, exhaustMap, take, throwError } from "rxjs";
 import { Router } from "@angular/router";
 import { SnackBar } from "../components/notification/snack-bar";
-import { DURATION, STYLE_ERROR } from "../constants/snack-bar.constants";
+import { DURATION, SESSION_EXPIRED_MESSAGE} from "../constants/snack-bar.constants";
 import { logout } from "../../store/auth-store/auth.actions";
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
@@ -34,7 +34,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
                 return next(cloned).pipe(
                     catchError((error: HttpErrorResponse)=>{
                         if(error.status === 401){
-                            snackBar.showSnackBar('Your session has expired. Please login again!', DURATION, STYLE_ERROR);
+                            snackBar.showSnackBar(SESSION_EXPIRED_MESSAGE, DURATION);
                             store.dispatch(logout());
                             zone.run(()=>router.navigate(['/login']));
                         }
@@ -43,7 +43,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
                 );
             }
 
-            snackBar.showSnackBar('Your session has expired. Please login again!', DURATION, STYLE_ERROR);
+            snackBar.showSnackBar(SESSION_EXPIRED_MESSAGE, DURATION);
             zone.run(()=>router.navigate(['/login']));
             return EMPTY;
         })

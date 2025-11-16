@@ -19,12 +19,28 @@ export class PlacesService {
             throw new NotFoundException('There are no places around!');
         }
 
-        return availablePlaces;
+        return availablePlaces.map(attraction=>({
+                id: attraction.id,
+                placeName: attraction.placeName,
+                latitude: attraction.latitude,
+                longitude: attraction.longitude
+            })
+        )
     }
 
     async getPlaceByName(placeName: string){
         const place = await this.placeRepository.findOneBy({placeName});
-        return place;
+        if(place){
+            return {
+                id: place.id,
+                placeName: place.placeName,
+                latitude: place.latitude,
+                longitude: place.longitude
+            };
+        }
+        else {
+            throw new NotFoundException('Place not found!');
+        }
     }
 
     async getAttractionsForPlace(placeName:string){

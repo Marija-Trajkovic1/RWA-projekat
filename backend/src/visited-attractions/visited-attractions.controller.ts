@@ -11,7 +11,7 @@ export class VisitedAttractionsController {
 
     @UseGuards(JwtAuthGuard)
     @Get('getVisitedAttraction/:attractionId')
-    async getVisitedAttraction(@Param('attractionId') attractionId: number, @GetUser('id')userId: number){
+    async getVisitedAttraction(@Param('attractionId') attractionId: number, @GetUser('id')userId: number): Promise<{isVisited: boolean}> {
         return this.visitedAttractionsService.getVisitedAttraction(userId, attractionId);
     }
 
@@ -21,14 +21,14 @@ export class VisitedAttractionsController {
         @Param('attractionId')attractionId: number,
         @GetUser('id') userId: number,
         @Body('rating') rating: number
-    ):Promise<VisitedAttractionDto>{
+    ) :Promise<VisitedAttractionDto>{
         return this.visitedAttractionsService.updateVisitedAttractionStatus(attractionId, userId, rating);
     }
 
 
     @UseGuards(JwtAuthGuard)
     @Get('getAverageRatingForAttraction/:attractionId')
-    async getAverageRatingForAttraction(@Param('attractionId')attractionId: number):Promise<{averageRating : number}>{
+    async getAverageRatingForAttraction(@Param('attractionId')attractionId: number): Promise<{averageRating : number}>{
         return this.visitedAttractionsService.getAverageRatingForAttraction(attractionId);
     }
 }

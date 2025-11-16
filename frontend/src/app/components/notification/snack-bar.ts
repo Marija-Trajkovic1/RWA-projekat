@@ -9,12 +9,12 @@ export class SnackBar {
   constructor(private snackBar :MatSnackBar){
   }
 
-  showSnackBar(message: string, duration:number, style:string){
+  showSnackBar(message: string, duration:number){
     this.snackBar.open(message, 'Close',{
       duration,
-      panelClass:[`${style}`],
       horizontalPosition: 'right',
       verticalPosition: 'top'
-    })
+    })  
   }  
+  
 }

@@ -10,7 +10,7 @@ export class AuthService {
         private jwtService : JwtService) 
     {}
 
-    async register(registerDto: RegisterUserDto): Promise<{message:string}>{
+    async register(registerDto: RegisterUserDto){
         const existingUser= await this.usersService.findUserByEmail(registerDto.email);
         if(existingUser){
             throw new ConflictException('User with this email already existis!');
@@ -30,7 +30,7 @@ export class AuthService {
         }
     }
 
-    async login(email:string, password:string): Promise<{access_token: string}>{
+    async login(email:string, password:string){
         const user = await this.usersService.findUserByEmail(email);
         if(!user){
             throw new UnauthorizedException('Invaid credentials!');

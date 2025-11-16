@@ -3,10 +3,14 @@
     <span class="spacer"></span>
 
     @if ((token$ | async) !== null ){
+        @if((selectedPlace$ | async) !==null  ){ 
+            @if(router.url !== '/wheretogo'){
+                <button mat-button class ="nav-button" routerLink="/wheretogo" >Look for another city</button>
+            }
+        }
         <button mat-button class="nav-button" (click)="onLogout()">Logout</button>
     } @else {
         <button mat-button class="nav-button" routerLink="/login">Login</button>
         <button mat-button class="nav-button" routerLink="/register">Register</button>
     }
-    
 </mat-toolbar>

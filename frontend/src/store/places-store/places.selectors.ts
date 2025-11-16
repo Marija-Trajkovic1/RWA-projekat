@@ -5,7 +5,7 @@ export const selectPlacesState = createFeatureSelector<PlacesState>('places');
 
 export const selectAllPlaces = createSelector(
     selectPlacesState,
-    (state: PlacesState) => state.places
+    (state: PlacesState) => state.ids.map(id=>state.entities[id]).filter((place)=>!!place)
 );
 
 export const selectPlacesLoading = createSelector(

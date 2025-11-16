@@ -1,6 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialStatePlaces } from "../store.interfaces";
 import { loadPlaces, loadPlacesFailure, loadPlacesSuccess, selectPlace } from "./places.actions";
+import { placesAdapter } from "../store.adapters";
 
 export const placesReducer = createReducer(
     initialStatePlaces,
@@ -11,12 +12,13 @@ export const placesReducer = createReducer(
         error: null,
     })),
 
-    on(loadPlacesSuccess, (state, {places})=>({
-        ...state,
-        places,
-        loading: false,
-        error: null
-    })),
+    on(loadPlacesSuccess, (state, {places})=>(
+        placesAdapter.setAll(places, {
+            ...state,
+            loading: false,
+            error: null
+        })
+    )),
 
     on(loadPlacesFailure, (state, {error})=>({
         ...state,

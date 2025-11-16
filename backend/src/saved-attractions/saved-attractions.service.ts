@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SavedAttraction } from './saved-attractions.entity';
 import { Repository } from 'typeorm';
@@ -57,6 +57,11 @@ export class SavedAttractionsService {
         });
         if(existing){
             await this.savedAttractionRepository.remove(existing);
+            return {
+                message:'Succesfuly deleted!'
+            }
+        }else{
+            throw new InternalServerErrorException('Error while deleting saved attraction!');
         }
     }
 
@@ -67,7 +72,7 @@ export class SavedAttractionsService {
         })
 
         return  savedAttractions.map(savedAttraction =>({
-            attractionId:savedAttraction.id,
+            attractionId: savedAttraction.id,
             attractionName: savedAttraction.attraction.attractionName,
             placeName: savedAttraction.attraction.place.placeName
         }));

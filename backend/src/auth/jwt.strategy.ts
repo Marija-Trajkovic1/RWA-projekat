@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { UsersService } from "src/users/users.service";

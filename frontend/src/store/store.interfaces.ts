@@ -2,6 +2,8 @@ import { AttractionDetails, AttractionSummary } from "../app/models/attraction.m
 import { Place } from "../app/models/place.model";
 import { User } from "../app/models/user.model";
 import { VisitedAttraction } from "../app/models/visited.model";
+import { EntityState } from "@ngrx/entity"
+import { attractionsAdapter, placesAdapter } from "./store.adapters";
 
 export interface AuthState {
     user: User | null;
@@ -17,31 +19,27 @@ export const initialStateAuth: AuthState = {
     error: null
 }
 
-export interface PlacesState {
-    places: Place[];
+export interface PlacesState extends EntityState<Place>{
     selectedPlace: Place | null;
     loading: boolean;
     error: string | null;
 }
 
-export const initialStatePlaces : PlacesState = {
-    places: [],
+export const initialStatePlaces : PlacesState = placesAdapter.getInitialState({
     selectedPlace: null,
     loading: false,
     error: null,
-}
+})
 
-export interface AttractionsState {
-    attractions: AttractionDetails[];
+export interface AttractionsState extends EntityState<AttractionSummary>{
     loading: boolean;
     error: string | null;
 }
 
-export const initialStateAttractionsSummary : AttractionsState = {
-    attractions: [],
+export const initialStateAttractionsSummary : AttractionsState = attractionsAdapter.getInitialState({
     loading: false,
     error: null,
-}
+})
 
 export interface AttractionDetailsState {
     attraction: AttractionDetails | null;

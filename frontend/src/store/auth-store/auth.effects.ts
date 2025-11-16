@@ -5,7 +5,7 @@ import { catchError, map, mergeMap, of, tap } from "rxjs";
 import { AuthService } from "../../app/services/auth/auth.service";
 import { Router } from "@angular/router";
 import { SnackBar } from "../../app/components/notification/snack-bar";
-import { DURATION, STYLE_INFO, STYLE_SUCCESS } from "../../app/constants/snack-bar.constants";
+import { DURATION, SUCCEESSFULY_LOGGED_IN_MESSAGE, SUCCEESSFULY_LOGGED_OUT_MESSAGE } from "../../app/constants/snack-bar.constants";
  
 @Injectable()
 export class AuthEffects {
@@ -33,7 +33,7 @@ export class AuthEffects {
         this.actions$.pipe(
             ofType(loginSuccess),
             tap(()=>{
-                this.snackBar.showSnackBar("Successefully logged in!", DURATION, STYLE_SUCCESS);
+                this.snackBar.showSnackBar(SUCCEESSFULY_LOGGED_IN_MESSAGE, DURATION);
                 this.router.navigate(['wheretogo'])
             })
         ),
@@ -44,7 +44,7 @@ export class AuthEffects {
         this.actions$.pipe(
             ofType(logout),
             tap(()=>{
-                this.snackBar.showSnackBar('Successfully logged out!' , DURATION, STYLE_INFO);
+                this.snackBar.showSnackBar(SUCCEESSFULY_LOGGED_OUT_MESSAGE , DURATION);
                 this.router.navigate(['/home']);
             })
         ),

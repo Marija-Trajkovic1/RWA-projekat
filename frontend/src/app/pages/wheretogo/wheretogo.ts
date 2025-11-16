@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 import { EMPTY, filter, Observable, switchMap, tap, withLatestFrom } from 'rxjs';
 import { LocationService } from '../../services/location/location.service';
 import { PlacesService } from '../../services/places/places.service';
-import { DURATION, STYLE_ERROR, STYLE_INFO, STYLE_SUCCESS } from '../../constants/snack-bar.constants';
+import { ALLOW_LOCATION_MESSAGE, DURATION, ERROR_FETCHING_PLACES_MESSAGE, GEOLOCATION_NOT_AVAILABLE_MESSAGE, INFORMATIONS_FOR_PLACE_NOT_AVAILABLE_MESSAGE, PLACE_INFORMATIONS_LOADED_MESSAGE, UNKNOWN_LOCATION } from '../../constants/snack-bar.constants';
 import { MatProgressSpinner } from '@angular/material/progress-spinner'
 @Component({
   selector: 'app-wheretogo',
@@ -61,7 +61,7 @@ export class WhereToGo implements OnInit {
     
     this.error$.subscribe(error =>{
       if(error){
-        this.snackBar.showSnackBar(error, DURATION, STYLE_ERROR);
+        this.snackBar.showSnackBar(ERROR_FETCHING_PLACES_MESSAGE, DURATION);
       }
     });
 
@@ -88,7 +88,7 @@ export class WhereToGo implements OnInit {
 
   useCurrentLocation(){
      if(!navigator.geolocation){
-      this.snackBar.showSnackBar('Geolocation is not supported by your browser.', DURATION, STYLE_ERROR);
+      this.snackBar.showSnackBar(GEOLOCATION_NOT_AVAILABLE_MESSAGE, DURATION);
       return;
      }
 
@@ -121,14 +121,14 @@ export class WhereToGo implements OnInit {
       }),
       switchMap(placeName=>{
         if(!placeName){
-          this.snackBar.showSnackBar('Unknown location! Try again!', DURATION, STYLE_ERROR);
+          this.snackBar.showSnackBar(UNKNOWN_LOCATION, DURATION);
           this.loadingMap = false;
           return EMPTY;
         }
         return this.placesService.getPlaceByName(placeName).pipe(
           tap(place=>{
             if(!place){
-              this.snackBar.showSnackBar(`Informations for ${placeName} is not available yet!`, DURATION, STYLE_INFO);
+              this.snackBar.showSnackBar(INFORMATIONS_FOR_PLACE_NOT_AVAILABLE_MESSAGE, DURATION);
               this.loadingMap = false;
             } 
           })
@@ -141,14 +141,14 @@ export class WhereToGo implements OnInit {
         if(place){
           console.log('Place to dispatch action: ', place.placeName, place.latitude, place.longitude)
           this.store.dispatch(selectPlace({place}));
-          this.snackBar.showSnackBar(`Location: ${place.latitude}, ${place.longitude},  ${place.placeName}, `, DURATION, STYLE_SUCCESS);
+          this.snackBar.showSnackBar(PLACE_INFORMATIONS_LOADED_MESSAGE, DURATION);
           this.router.navigate(['/placemap']);
         }
       },
       error: err =>{
         console.error('Error while getting location data:', err);
         this.loadingMap = false;
-        this.snackBar.showSnackBar('Unable to get your location. Please allow location access.', DURATION, STYLE_ERROR);
+        this.snackBar.showSnackBar(ALLOW_LOCATION_MESSAGE, DURATION);
       }
      })
   }

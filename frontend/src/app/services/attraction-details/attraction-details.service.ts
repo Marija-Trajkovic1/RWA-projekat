@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { SnackBar } from '../../components/notification/snack-bar';
-import { DURATION, STYLE_ERROR } from '../../constants/snack-bar.constants';
+import { DURATION, ERROR_LOADING_ATTRACTION_DETAILS_MESSAGE } from '../../constants/snack-bar.constants';
 import { AttractionDetails } from '../../models/attraction.model';
 
 @Injectable({
@@ -14,9 +14,9 @@ export class AttractionDetailsService {
   constructor(private http : HttpClient) {}
 
   getDetailsForAttraction(id: number): Observable<AttractionDetails>{
-    return this.http.get<AttractionDetails>(`${environment.apiUrl}/attractions/getDetailsForAttraction?id=${id}`).pipe(
+    return this.http.get<AttractionDetails>(`${environment.attractionApiUrl}/getDetailsForAttraction?id=${id}`).pipe(
       catchError(error => {
-        this.snackBar.showSnackBar(`Error while loading details for attractions: ${error}`, DURATION, STYLE_ERROR);
+        this.snackBar.showSnackBar(ERROR_LOADING_ATTRACTION_DETAILS_MESSAGE, DURATION);
         return of();
       })
     )

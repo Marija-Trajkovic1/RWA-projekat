@@ -11,7 +11,7 @@ export class PlacesController {
 
     @UseGuards(JwtAuthGuard)
     @Get('getAvailablePlaces')
-    async getAvailablePlaces(){
+    async getAvailablePlaces() : Promise<PlaceResponseDto[]>{
         return this.placesService.getAvailablePlaces();
     }
 

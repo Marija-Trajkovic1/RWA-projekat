@@ -4,6 +4,7 @@ import { Store } from "@ngrx/store";
 import { selectAuthToken } from "../../store/auth-store/auth.selectors";
 import { map, take } from "rxjs";
 import { SnackBar } from "../components/notification/snack-bar";
+import { DURATION, NOT_LOGGED_MESSAGE } from "../constants/snack-bar.constants";
 
 export const authGuard: CanActivateFn = () => {
     const store = inject(Store);
@@ -16,7 +17,7 @@ export const authGuard: CanActivateFn = () => {
             if(token){
                 return true;
             } else {
-                snackBar.showSnackBar('You have to be logged in to see this page', 4000, 'error');
+                snackBar.showSnackBar(NOT_LOGGED_MESSAGE, DURATION);
                 router.navigate(['/home'])
                 return false;
             }

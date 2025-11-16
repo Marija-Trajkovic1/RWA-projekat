@@ -1,4 +1,17 @@
-export const DURATION = 4000;
-export const STYLE_SUCCESS = 'success';
-export const STYLE_INFO = 'info';
-export const STYLE_ERROR = 'error';
+export const DURATION = 4000
+
+export const NOT_LOGGED_MESSAGE = 'You have to be logged in to see this page!'
+export const SUCCEESSFULY_LOGGED_IN_MESSAGE = 'Successefully logged in!'
+export const SUCCEESSFULY_LOGGED_OUT_MESSAGE= 'Successfully logged out!'
+export const ERROR_FETCHING_PLACES_MESSAGE = 'Error while fetching a place.'
+export const ERROR_FETCHING_ATTRACTIONS_MESSAGE = 'Error while loading attractions for place.'
+export const ERROR_LOADING_ATTRACTION_DETAILS_MESSAGE = 'Error while loading details for attractions.'
+export const GEOLOCATION_NOT_AVAILABLE_MESSAGE = 'Geolocation is not supported by your browser.'
+export const UNKNOWN_LOCATION = 'Unknown location! Try again!'
+export const INFORMATIONS_FOR_PLACE_NOT_AVAILABLE_MESSAGE ='Informations for this place are not available yet!'
+export const PLACE_INFORMATIONS_LOADED_MESSAGE ='Location details loaded successefuly!'
+export const ALLOW_LOCATION_MESSAGE = 'Unable to get your location. Please allow location access.'
+export const SUCCEESSFULY_REGISTERED_MESSAGE = 'Successfully registered! Redirecting...'
+export const REGISTRATION_FAILED_MESSAGE = 'Registration failed! Check your data!'
+export const ENTER_VALID_DATA_MESSAGE = 'Enter valid data to register!'
+export const SESSION_EXPIRED_MESSAGE = 'Your session has expired. Please login again!'

@@ -12,20 +12,20 @@ export class VisitedAttractonService {
 
   getIsVisitedAttraction(attractionId: number): Observable<{isVisited: boolean}>{
     return this.http.get<{isVisited: boolean}>(
-      `${environment.apiUrl}/visited-attractions/getVisitedAttraction/${attractionId}`
+      `${environment.visitedAttracttionsApiUrl}/getVisitedAttraction/${attractionId}`
     )
   }
 
   updateVisitedAttractionStatus(attractionId: number, rating: number): Observable<{visitedAttraction: VisitedAttraction}>{
     return this.http.post<{visitedAttraction: VisitedAttraction}>(
-      `${environment.apiUrl}/visited-attractions/updateVisitedAttractionStatus/${attractionId}`,
+      `${environment.visitedAttracttionsApiUrl}/updateVisitedAttractionStatus/${attractionId}`,
       {rating}
     )
   }
 
   getAverageRatingForAttraction(attractionId: number): Observable<{averageRating:number}>{
     return this.http.get<{averageRating:number}>(
-      `${environment.apiUrl}/visited-attractions/getAverageRatingForAttraction/${attractionId}`
+      `${environment.visitedAttracttionsApiUrl}/getAverageRatingForAttraction/${attractionId}`
     )
   }
 }

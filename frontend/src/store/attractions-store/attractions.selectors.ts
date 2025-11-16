@@ -5,7 +5,7 @@ export const selectAttractionsState = createFeatureSelector<AttractionsState>('a
 
 export const selectAttractions = createSelector(
     selectAttractionsState,
-    (state: AttractionsState)=>state.attractions
+    (state: AttractionsState)=>state.ids.map(id=>state.entities[id]).filter((attraction)=>!!attraction)
 );
 
 export const selectAttractionsLoading = createSelector(

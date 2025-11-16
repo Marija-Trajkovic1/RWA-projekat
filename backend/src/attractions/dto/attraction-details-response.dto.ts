@@ -4,8 +4,8 @@ export class AttractionDetailsResponseDto{
         shortDescription?:string;
         longDescription?: string;
         category:string;
-        latitude: number;
-        longitude: number;
         workingHours?: string;
         websiteLink?: string;
+        address?: string;
+        phoneNumber?: string;
 }
