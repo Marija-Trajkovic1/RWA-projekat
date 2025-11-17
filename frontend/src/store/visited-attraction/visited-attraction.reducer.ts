@@ -33,6 +33,7 @@ export const visitedAttractionReducer = createReducer(
     on(updateVisitedAttractionSuccess, (state, {visitedAttraction})=>({
         ...state,
         visitedAttraction, 
+        isVisited: true,
         loading: false,
         error: null
     })),

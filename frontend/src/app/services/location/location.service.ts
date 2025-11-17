@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { PLACE_NAME_REGULAR } from '../../constants/regular-expressions';
+import { PLACE_NAME_REGULAR } from '../../constants/regular-expressions.constants';
 
 @Injectable({
   providedIn: 'root'

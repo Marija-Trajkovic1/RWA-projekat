@@ -26,9 +26,6 @@ export class Navbar {
   selectedPlace$ = this.store.select(selectSelectedPlace);
 
   constructor(public router: Router){
-    this.token$.subscribe(token => {
-    console.log('🔹 Token u Navbar:', token);
-  });
   }
 
   onLogout(): void{

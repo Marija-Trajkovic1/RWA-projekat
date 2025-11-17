@@ -25,20 +25,23 @@ export class VisitedAttractionsService {
         }
     }
 
-    async updateVisitedAttractionStatus(attractionId: number, userId: number, rating: number): Promise<VisitedAttractionDto>{
+    async updateVisitedAttractionStatus(attractionId: number, userId: number, rating: number){
         const existing = await this.visitedAttractionRepository.findOne({
-           where: {user: {id:userId}, attraction: {id:attractionId}},
+           where: {user: {id: userId}, attraction: {id: attractionId}},
             relations: ['user', 'attraction'],
         });
-
+        let visited: VisitedAttraction;
         if(existing){
             existing.rating = rating;
-            const visited = await this.visitedAttractionRepository.save(existing);
+            visited = await this.visitedAttractionRepository.save(existing);
+
             return {
-                id: visited.id,
-                attractionId: visited.attraction.id,
-                userId: visited.user.id,
-                rating: visited.rating,
+                visitedAttraction: {
+                    id: visited.id,
+                    attractionId: visited.attraction.id,
+                    userId: visited.user.id,
+                    rating: visited.rating,
+                }
             }
         } else {
             const newVisited = this.visitedAttractionRepository.create({
@@ -46,13 +49,16 @@ export class VisitedAttractionsService {
                 attraction: {id: attractionId},
                 rating,
             });
-            const visited = await this.visitedAttractionRepository.save(newVisited); 
+            visited = await this.visitedAttractionRepository.save(newVisited); 
+            
             return {
-                id: visited.id,
-                attractionId: visited.attraction.id,
-                userId: visited.user.id,
-                rating: visited.rating,
-            }  
+                visitedAttraction:{
+                    id: visited.id,
+                    attractionId: visited.attraction.id,
+                    userId: visited.user.id,
+                    rating: visited.rating,
+                }
+            }
         }
     }
 

@@ -21,7 +21,7 @@ export class VisitedAttractionsController {
         @Param('attractionId')attractionId: number,
         @GetUser('id') userId: number,
         @Body('rating') rating: number
-    ) :Promise<VisitedAttractionDto>{
+    ) :Promise<{visitedAttraction: VisitedAttractionDto}>{
         return this.visitedAttractionsService.updateVisitedAttractionStatus(attractionId, userId, rating);
     }
 
