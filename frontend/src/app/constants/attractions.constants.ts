@@ -1,4 +1,6 @@
 export const IMPORTANT = 'Important'
+export const MAX_DISTANCE = 1
+export const EARTH_RADIUS_IN_KM = 6371 
 
 export const CATEGORY_COLORS: Record<string, string> = {
     'Archeologic' : 'gray',
@@ -29,5 +31,3 @@ export const CATEGORY_ICONS: Record<string, string> = {
     'Shopping' : 'assets/marker-icons/shopping-cart.svg', 
     'Square' : 'assets/marker-icons/pillar.svg', 
 }
-
-export const MAX_DISTANCE = 1;

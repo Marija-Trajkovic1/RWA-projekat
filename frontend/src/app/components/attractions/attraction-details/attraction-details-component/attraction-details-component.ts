@@ -56,7 +56,6 @@ export class AttractionDetailsComponent implements OnInit{
   }
 
   closeDetails(){
-    console.log('Closed');
     this.store.dispatch(clearAttractionDetails());
   }
 }

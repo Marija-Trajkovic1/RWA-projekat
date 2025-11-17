@@ -2,11 +2,10 @@ import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatest, debounceTime, distinctUntilChanged, fromEvent, map, startWith, Subject, takeUntil } from 'rxjs';
 import { selectAttractions } from '../../../../store/attractions-store/attractions.selectors';
-import { CATEGORY_COLORS, CATEGORY_ICONS, IMPORTANT } from '../../../constants/attractions.constants';
+import { CATEGORY_COLORS, CATEGORY_ICONS } from '../../../constants/attractions.constants';
 import { AttractionSummary } from '../../../models/attraction.model';
 import maplibregl from 'maplibre-gl';
 import { loadAttractionDetails } from '../../../../store/attraction-store/attraction.actions';
-import { calculateHaversineDistance } from '../../../utils/haversine.util';
 import { AttractionMarkersService } from '../../../services/attraction-markers/attraction-markers.service';
 
 @Component({
@@ -79,12 +78,15 @@ export class AttractionMarkers implements OnInit, OnDestroy{
       if(!existingIds.has(attraction.id.toString())){
         const markerEmement = this.createMarkerElement(attraction.category);
         markerEmement.dataset['id'] = attraction.id.toString();
+        
         const marker = new maplibregl.Marker({element: markerEmement})
           .setLngLat([attraction.longitude, attraction.latitude])
           .addTo(this.map);
         const namePopup = new maplibregl.Popup({offset: 25})
           .setHTML(`<strong>${attraction.attractionName}</strong>`);
+
         const element = marker.getElement();
+
         element.addEventListener('mouseenter', ()=>{
           namePopup.setLngLat([attraction.longitude, attraction.latitude]).addTo(this.map);
         });

@@ -41,7 +41,7 @@ export class WhereToGo implements OnInit {
   private snackBar  = inject(SnackBar);
   private formBuilder = inject(FormBuilder);
   private placesService = inject(PlacesService);
-  private locationService = inject(LocationService)
+  private locationService = inject(LocationService);
 
   cityForm: FormGroup;
   loadingMap = false;
@@ -74,7 +74,6 @@ export class WhereToGo implements OnInit {
           if(place){
             this.loadingMap = true;
             this.store.dispatch(selectPlace({place}));
-            console.log('Selected: ', place);
             this.router.navigate(['/placemap']).then(()=>{
               this.loadingMap =false;
             });
@@ -113,9 +112,6 @@ export class WhereToGo implements OnInit {
       switchMap(position=>{
         const latitude = position.coords.latitude;
         const longitude =position.coords.longitude;
-        //const latitude = 42.933333894777206;
-        //const longitude = 21.773483428936434;
-        console.log('Current position: ',latitude, longitude);
         
         return this.locationService.getPlaceFromCoordinates(latitude,longitude);
       }),
@@ -139,15 +135,12 @@ export class WhereToGo implements OnInit {
       next:place =>{
         this.loadingMap = false;
         if(place){
-          console.log('Place to dispatch action: ', place.placeName, place.latitude, place.longitude)
           this.store.dispatch(selectPlace({place}));
           this.snackBar.showSnackBar(PLACE_INFORMATIONS_LOADED_MESSAGE, DURATION);
           this.router.navigate(['/placemap']);
         }
       },
       error: err =>{
-        console.error('Error while getting location data:', err);
-        this.loadingMap = false;
         this.snackBar.showSnackBar(ALLOW_LOCATION_MESSAGE, DURATION);
       }
      })

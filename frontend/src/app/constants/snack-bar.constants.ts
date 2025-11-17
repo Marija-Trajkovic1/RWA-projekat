@@ -15,3 +15,4 @@ export const SUCCEESSFULY_REGISTERED_MESSAGE = 'Successfully registered! Redirec
 export const REGISTRATION_FAILED_MESSAGE = 'Registration failed! Check your data!'
 export const ENTER_VALID_DATA_MESSAGE = 'Enter valid data to register!'
 export const SESSION_EXPIRED_MESSAGE = 'Your session has expired. Please login again!'
+export const FAILED_AUTHENTICATION_MESSAGE = 'Enter valid email and passport to login!'

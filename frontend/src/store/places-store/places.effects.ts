@@ -9,9 +9,7 @@ export class PlacesEffects{
     private actions$ = inject(Actions);
     private placesService = inject(PlacesService);
 
-    constructor(){
-        console.log('Test from effect places.')
-    }
+    constructor(){}
 
     loadingPlaces$ = createEffect(()=>
         this.actions$.pipe(

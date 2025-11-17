@@ -18,8 +18,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         req.url.includes('/register') ||
         req.url.includes('/auth') ||
         req.url.includes('opencagedata.com')){
-        return next(req);
-        }
+        return next(req)
+    }
 
     return store.select(selectAuthToken).pipe(
         take(1),
@@ -54,10 +54,8 @@ function isTokenExpired(token: string):boolean{
     try{
         const payload = JSON.parse(atob(token.split('.')[1]));
         const expiry = payload.exp * 1000;
-        console.log('Token exp:', new Date(expiry).toLocaleString(), 'Now:', new Date().toLocaleString());
         return Date.now()>=expiry;
     } catch (err){
-        console.error('Token decode error:', err);
         return false;
     }
 }

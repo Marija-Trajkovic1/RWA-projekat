@@ -5,7 +5,7 @@ import { catchError, map, mergeMap, of, tap } from "rxjs";
 import { AuthService } from "../../app/services/auth/auth.service";
 import { Router } from "@angular/router";
 import { SnackBar } from "../../app/components/notification/snack-bar";
-import { DURATION, SUCCEESSFULY_LOGGED_IN_MESSAGE, SUCCEESSFULY_LOGGED_OUT_MESSAGE } from "../../app/constants/snack-bar.constants";
+import { DURATION, FAILED_AUTHENTICATION_MESSAGE, SUCCEESSFULY_LOGGED_IN_MESSAGE, SUCCEESSFULY_LOGGED_OUT_MESSAGE } from "../../app/constants/snack-bar.constants";
  
 @Injectable()
 export class AuthEffects {
@@ -14,9 +14,7 @@ export class AuthEffects {
     private router = inject(Router);
     private snackBar=inject(SnackBar);
 
-    constructor() {
-        console.log('AuthEffects init:', { actions: this.actions$, authService: this.authService });
-    }
+    constructor() {}
     
     login$ = createEffect(()=>
         this.actions$.pipe(
@@ -24,7 +22,11 @@ export class AuthEffects {
             mergeMap(({loginData})=>
             this.authService.login(loginData).pipe(
                 map(response=>loginSuccess({token: response.access_token})),
-                catchError(error=>of(loginFailure({error:error.message})))
+                catchError(error => 
+                    of(loginFailure({
+                        error: error.error?.message
+                    }))
+                )
             ))
         )
     )
@@ -49,5 +51,15 @@ export class AuthEffects {
             })
         ),
         {dispatch: false}
+    )
+
+    loginFailure$ = createEffect(()=>
+        this.actions$.pipe(
+            ofType(loginFailure),
+            tap(({error})=>{
+                this.snackBar.showSnackBar(FAILED_AUTHENTICATION_MESSAGE, DURATION);
+            })
+        ),
+        { dispatch: false }
     )
 }

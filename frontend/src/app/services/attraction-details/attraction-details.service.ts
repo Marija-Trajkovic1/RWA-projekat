@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, EMPTY, Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { SnackBar } from '../../components/notification/snack-bar';
 import { DURATION, ERROR_LOADING_ATTRACTION_DETAILS_MESSAGE } from '../../constants/snack-bar.constants';
@@ -17,7 +17,7 @@ export class AttractionDetailsService {
     return this.http.get<AttractionDetails>(`${environment.attractionApiUrl}/getDetailsForAttraction?id=${id}`).pipe(
       catchError(error => {
         this.snackBar.showSnackBar(ERROR_LOADING_ATTRACTION_DETAILS_MESSAGE, DURATION);
-        return of();
+        return EMPTY;
       })
     )
   }

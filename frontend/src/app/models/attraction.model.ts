@@ -16,4 +16,6 @@ export interface AttractionDetails{
     longDescription?: string;
     workingHours?: string;
     websiteLink?: string;
+    phoneNumber?: string;
+    address?: string;
 }

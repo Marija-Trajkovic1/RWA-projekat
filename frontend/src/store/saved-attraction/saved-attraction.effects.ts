@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { SavedAttractionService } from "../../app/services/saved-attraction/saved-attraction.service";
 import { loadSavedAttraction, loadSavedAttractionFailure, loadSavedAttractionSuccess, updateSavedAttractionStatus, updateSavedAttractionStatusFailure, updateSavedAttractionStatusSuccess } from "./saved-attraction.actions";
-import { catchError, map, mergeMap, of, switchMap } from "rxjs";
+import { catchError, map, of, switchMap } from "rxjs";
 
 @Injectable()
 export class SavedAttractionEffects {

@@ -28,7 +28,9 @@
       }
 
       @if (attraction.workingHours) {
-        <p><strong>Working hours:</strong> {{ attraction.workingHours }}</p>
+        <p>
+          <strong>Working hours:</strong> {{ attraction.workingHours }}
+        </p>
       }
 
       @if (attraction.websiteLink) {
@@ -37,6 +39,18 @@
           <a [href]="attraction.websiteLink" target="_blank" rel="noopener">
             {{ attraction.websiteLink }}
           </a>
+        </p>
+      }
+
+      @if (attraction.phoneNumber){
+        <p>
+          <strong>Phone Number: </strong> {{attraction.phoneNumber}}
+        </p>
+      }
+
+      @if (attraction.address){
+        <p>
+          <strong>Address: </strong> {{attraction.address}}
         </p>
       }
 

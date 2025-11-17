@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { AttractionSummary } from '../../models/attraction.model';
 import { IMPORTANT, MAX_DISTANCE } from '../../constants/attractions.constants';
 import { calculateHaversineDistance } from '../../utils/haversine.util';
@@ -8,7 +7,7 @@ import { calculateHaversineDistance } from '../../utils/haversine.util';
   providedIn: 'root'
 })
 export class AttractionMarkersService {
-  constructor(private store: Store) {}
+  constructor(){}
 
   filterAttractions(
     attractions: AttractionSummary[],

@@ -33,12 +33,12 @@ export class AuthService {
     async login(email:string, password:string){
         const user = await this.usersService.findUserByEmail(email);
         if(!user){
-            throw new UnauthorizedException('Invaid credentials!');
+            throw new UnauthorizedException('User with this email not found!');
         }
         
         const passwordMatch = await bcrypt.compare(password, user.password);
         if(!passwordMatch){
-            throw new UnauthorizedException('Invaid password!');
+            throw new UnauthorizedException('Please enter valid credentials!');
         }
 
         const payload = {email: user.email, sub: user.id};

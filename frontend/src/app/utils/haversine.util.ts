@@ -1,8 +1,9 @@
+import { EARTH_RADIUS_IN_KM } from "../constants/attractions.constants";
+
 export function calculateHaversineDistance(
     coord1: [number, number], 
     coord2: [number, number]
 ): number {
-    const earthRadiusInKm = 6371;
     const [lon1, lat1] = coord1;
     const [lon2, lat2] = coord2;
 
@@ -14,7 +15,7 @@ export function calculateHaversineDistance(
         Math.sin(deltaLongitude / 2) *
         Math.sin(deltaLongitude / 2);
     const centralAngle =2 * Math.atan2(Math.sqrt(haversineOfCentralAngle), Math.sqrt(1-haversineOfCentralAngle));
-    return earthRadiusInKm*centralAngle;
+    return EARTH_RADIUS_IN_KM*centralAngle;
   }
 
   export function toRad(value: number): number {

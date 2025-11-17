@@ -10,6 +10,7 @@ import { login } from '../../../store/auth-store/auth.actions';
 import { LoginDto } from '../../dtos/login.dto';
 import { selectAuthError, selectAuthLoading } from '../../../store/auth-store/auth.selectors';
 import { AuthState } from '../../../store/store.interfaces';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,7 @@ import { AuthState } from '../../../store/store.interfaces';
     ReactiveFormsModule,
     RouterLink,
     MatError,
+    AsyncPipe
 ],
   templateUrl: './login.html',
   styleUrls: ['./login.scss', '../../styles/shared-style.scss']
@@ -33,7 +35,6 @@ export class Login {
   private store = inject<Store<{ auth: AuthState }>>(Store);
   private formBuilder = inject(FormBuilder);
   loginForm: FormGroup;
-  duration: number=10000;
   
   loading$ = this.store.select(selectAuthLoading);
   error$ = this.store.select(selectAuthError);
@@ -48,8 +49,6 @@ export class Login {
       if(this.loginForm.valid){
         const loginData :LoginDto = this.loginForm.value;
         this.store.dispatch(login({loginData}));
-        
-        console.log("Logovano!")
       }
     }
 }
